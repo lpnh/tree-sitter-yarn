@@ -1,0 +1,514 @@
+=============================================================================|||
+ActionDeclarations
+=============================================================================|||
+
+title: ActionDeclarations
+---
+{string(42)}
+{number("123")}
+{bool(1)}
+{format_invariant(123.45)}
+{visited("ActionDeclarations")}
+{visited_count("ActionDeclarations")}
+{random()}
+{random_range(1,5)}
+{random_range_float(1,5)}
+{dice(6)}
+{round(4.5)}
+{round_places(5.2, 1)}
+{floor(2.3)}
+{ceil(2.3)}
+{inc(1.1)}
+{dec(1.2)}
+{decimal(2.3)}
+{int(2.3)}
+{format("{0:F2}", 1)}
+{min(2,3)}
+{max(4,5)}
+{has_any_content("some_node")}
+===
+
+-----------------------------------------------------------------------------|||
+
+(dialogue
+  (node
+    (title_header
+      (identifier))
+    (body
+      (line_statement
+        (function_call
+          (identifier)
+          (number)))
+      (line_statement
+        (function_call
+          (identifier)
+          (string)))
+      (line_statement
+        (function_call
+          (identifier)
+          (number)))
+      (line_statement
+        (function_call
+          (identifier)
+          (number)))
+      (line_statement
+        (function_call
+          (identifier)
+          (string)))
+      (line_statement
+        (function_call
+          (identifier)
+          (string)))
+      (line_statement
+        (function_call
+          (identifier)))
+      (line_statement
+        (function_call
+          (identifier)
+          (number)
+          (number)))
+      (line_statement
+        (function_call
+          (identifier)
+          (number)
+          (number)))
+      (line_statement
+        (function_call
+          (identifier)
+          (number)))
+      (line_statement
+        (function_call
+          (identifier)
+          (number)))
+      (line_statement
+        (function_call
+          (identifier)
+          (number)
+          (number)))
+      (line_statement
+        (function_call
+          (identifier)
+          (number)))
+      (line_statement
+        (function_call
+          (identifier)
+          (number)))
+      (line_statement
+        (function_call
+          (identifier)
+          (number)))
+      (line_statement
+        (function_call
+          (identifier)
+          (number)))
+      (line_statement
+        (function_call
+          (identifier)
+          (number)))
+      (line_statement
+        (function_call
+          (identifier)
+          (number)))
+      (line_statement
+        (function_call
+          (identifier)
+          (string)
+          (number)))
+      (line_statement
+        (function_call
+          (identifier)
+          (number)
+          (number)))
+      (line_statement
+        (function_call
+          (identifier)
+          (number)
+          (number)))
+      (line_statement
+        (function_call
+          (identifier)
+          (string))))))
+
+=============================================================================|||
+NodeGroups
+=============================================================================|||
+
+title: SpeakToGuard
+when: $guard_friendly == true
+---
+// The guard likes us
+Guard: Halt, traveller!
+Player: Why, hello there!
+Guard: Ah, my friend! You may pass.
+===
+
+title: SpeakToGuard
+when: $guard_friendly == false
+---
+// The guard doesn't like us
+Guard: Halt, scum!
+Guard: None shall pass this point!
+===
+
+-----------------------------------------------------------------------------|||
+
+(dialogue
+  (node
+    (title_header
+      (identifier))
+    (when_header
+      (header_when_expression
+        (binary_expression
+          (variable
+            (identifier)))))
+    (comment)
+    (body
+      (line_statement
+        (text))
+      (line_statement
+        (text))
+      (line_statement
+        (text))))
+  (node
+    (title_header
+      (identifier))
+    (when_header
+      (header_when_expression
+        (binary_expression
+          (variable
+            (identifier)))))
+    (comment)
+    (body
+      (line_statement
+        (text))
+      (line_statement
+        (text)))))
+
+=============================================================================|||
+JumpsAndDetours
+=============================================================================|||
+
+title: Node1
+---
+<<jump Node2>>
+<<jump NodeInAnotherFile>>
+===
+title: Node2
+---
+<<detour Node3>>
+===
+title: Node3
+---
+No-op
+===
+title: Node4
+---
+<<if $x>>
+    <<jump Node1>>
+<<else>>
+    <<jump Node2>>
+<<endif>>
+===
+
+-----------------------------------------------------------------------------|||
+
+(dialogue
+  (node
+    (title_header
+      (identifier))
+    (body
+      (jump_statement
+        (identifier))
+      (jump_statement
+        (identifier))))
+  (node
+    (title_header
+      (identifier))
+    (body
+      (jump_statement
+        (identifier))))
+  (node
+    (title_header
+      (identifier))
+    (body
+      (line_statement
+        (text))))
+  (node
+    (title_header
+      (identifier))
+    (body
+      (if_statement
+        (variable
+          (identifier))
+        (block
+          (jump_statement
+            (identifier)))
+        (else_clause
+          (block
+            (jump_statement
+              (identifier))))))))
+
+=============================================================================|||
+PreviewFeatures
+=============================================================================|||
+
+title: Start
+---
+<<enum Colour>>
+    <<case Red>>
+    <<case Green>>
+    <<case Blue>>
+<<endenum>>
+
+<<declare $smart_var = 1 + 1>>
+
+=> Line group 1
+=> Line group 2
+=> Line group 3
+===
+
+-----------------------------------------------------------------------------|||
+
+(dialogue
+  (node
+    (title_header
+      (identifier))
+    (body
+      (enum_statement
+        (identifier)
+        (enum_case_statement
+          (identifier))
+        (enum_case_statement
+          (identifier))
+        (enum_case_statement
+          (identifier)))
+      (declare_statement
+        (variable
+          (identifier))
+        (binary_expression
+          (number)
+          (number)))
+      (line_group_statement
+        (line_group_item
+          (line_statement
+            (text)))
+        (line_group_item
+          (line_statement
+            (text)))
+        (line_group_item
+          (line_statement
+            (text)))))))
+
+=============================================================================|||
+Project1
+=============================================================================|||
+
+title: Start
+---
+This is a line.
+
+-> Option 1
+-> Option 2
+
+// This command is unknown to the LSP and should produce a warning
+<<unknown_command>>
+
+<<jump Node2>>
+
+<<enum TestEnum>>
+<<case Item1>>
+<<case Item2>>
+<<case Item3>>
+<<endenum>>
+
+===
+title: Node2
+tags: wow incredible
+---
+Here's a line in node 2.
+
+<<declare $myVar = "hello">>
+===
+title: CommandWorkout
+---
+<<static_command_no_docs>>
+<<instance_command_no_params target>>
+<<instance_command_with_params target One Two>>
+<<static_command_no_params>>
+<<static_command_with_params One Two>>
+===
+title: SmartVariables
+---
+<<declare $math = 1 + 1>>
+<<declare $gold = 0>>
+<<declare $playerCanAffordPies = $gold >= 5>>
+<<declare $isAlive = false>>
+<<declare $canEnterDoor = $isAlive>>
+<<declare $complexTest = $foo and ($bar or not true)>>
+=== 
+
+title: JumpToTest
+---
+// This is used to test typo fixing and creating stub nodes for jumps to node titles that don't exist
+<<jump Jump2Test>>
+
+===
+title: CodeCompletionTests
+---
+// This node exists for testing code-completion requests
+
+
+<<stop>>
+===
+
+-----------------------------------------------------------------------------|||
+
+(dialogue
+  (node
+    (title_header
+      (identifier))
+    (body
+      (line_statement
+        (text))
+      (shortcut_option_statement
+        (shortcut_option
+          (option_line
+            (text)))
+        (shortcut_option
+          (option_line
+            (text))))
+      (comment)
+      (command_statement
+        (identifier))
+      (jump_statement
+        (identifier))
+      (enum_statement
+        (identifier)
+        (enum_case_statement
+          (identifier))
+        (enum_case_statement
+          (identifier))
+        (enum_case_statement
+          (identifier)))))
+  (node
+    (title_header
+      (identifier))
+    (header
+      (identifier)
+      (header_value))
+    (body
+      (line_statement
+        (text))
+      (declare_statement
+        (variable
+          (identifier))
+        (string))))
+  (node
+    (title_header
+      (identifier))
+    (body
+      (command_statement
+        (identifier))
+      (command_statement
+        (identifier)
+        (identifier))
+      (command_statement
+        (identifier)
+        (identifier)
+        (identifier)
+        (identifier))
+      (command_statement
+        (identifier))
+      (command_statement
+        (identifier)
+        (identifier)
+        (identifier))))
+  (node
+    (title_header
+      (identifier))
+    (body
+      (declare_statement
+        (variable
+          (identifier))
+        (binary_expression
+          (number)
+          (number)))
+      (declare_statement
+        (variable
+          (identifier))
+        (number))
+      (declare_statement
+        (variable
+          (identifier))
+        (binary_expression
+          (variable
+            (identifier))
+          (number)))
+      (declare_statement
+        (variable
+          (identifier)))
+      (declare_statement
+        (variable
+          (identifier))
+        (variable
+          (identifier)))
+      (declare_statement
+        (variable
+          (identifier))
+        (binary_expression
+          (variable
+            (identifier))
+          (paren_expression
+            (binary_expression
+              (variable
+                (identifier))
+              (unary_expression)))))
+      (line_statement
+        (text))
+      (line_statement
+        (text))
+      (line_statement
+        (text))
+      (comment)
+      (jump_statement
+        (identifier))))
+  (node
+    (title_header
+      (identifier))
+    (comment)
+    (body
+      (command_statement
+        (identifier)))))
+
+=============================================================================|||
+Project2
+=============================================================================|||
+
+title: Start
+---
+<<custom_command "woo">>
+<<if custom_function(2)>>
+
+<<endif>>
+<<if unknown_function(3)>>
+<<endif>>
+===
+
+-----------------------------------------------------------------------------|||
+
+(dialogue
+  (node
+    (title_header
+      (identifier))
+    (body
+      (command_statement
+        (identifier)
+        (string))
+      (if_statement
+        (function_call
+          (identifier)
+          (number)))
+      (if_statement
+        (function_call
+          (identifier)
+          (number))))))

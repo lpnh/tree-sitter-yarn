@@ -1,0 +1,1525 @@
+=============================================================================|||
+Basic
+=============================================================================|||
+
+title: Start
+---
+whoa what here's some text
+<<set $foo to (1+3*3/9)-1>>
+
+<<if $foo is 1>> // testing a comment
+    this should appear :)
+    <<if 1 is 1>>
+        NESTED IF BLOCK WHAAAT
+        <<set $foo += 47 + 6>>
+    <<endif>>
+<<else>>
+    oh noooo it didn't work :(
+<<endif>>
+
+<<if $foo is 54>>
+    haha nice now 'set' works even when deeply nested
+<<else>>
+    aaargh :(
+<<endif>>
+===
+
+--------------------------------------------------------------------------|||
+
+(dialogue
+  (node
+    (title_header
+      (identifier))
+    (body
+      (line_statement
+        (text))
+      (set_statement
+        (variable
+          (identifier))
+        (binary_expression
+          (paren_expression
+            (binary_expression
+              (number)
+              (binary_expression
+                (binary_expression
+                  (number)
+                  (number))
+                (number))))
+          (number)))
+      (if_statement
+        (binary_expression
+          (variable
+            (identifier))
+          (number))
+        (comment)
+        (block
+          (line_statement
+            (text))
+          (if_statement
+            (binary_expression
+              (number)
+              (number))
+            (block
+              (line_statement
+                (text))
+              (set_statement
+                (variable
+                  (identifier))
+                (binary_expression
+                  (number)
+                  (number))))))
+        (else_clause
+          (block
+            (line_statement
+              (text)))))
+      (if_statement
+        (binary_expression
+          (variable
+            (identifier))
+          (number))
+        (block
+          (line_statement
+            (text)))
+        (else_clause
+          (block
+            (line_statement
+              (text))))))))
+
+=============================================================================|||
+Compiler
+=============================================================================|||
+
+title: Start
+---
+// Compiler tests
+
+This is a line!
+
+<<if false>>
+What what this is also a line!
+<<endif>>
+
+<<this is a custom command>>
+
+<<set $foo to 1+2>>
+
+<<if $foo is 3>>
+Foo is 3!
+<<elseif $foo is 4>>
+Foo is 4!
+<<else>>
+Foo is something TOTALLY DIFFERENT.
+<<endif>>
+
+-> This is a shortcut option that you'll never see <<if false>>
+    Nice.
+-> This is a different shortcut option
+    Sweet, but what about this?
+    -> It's ok
+        Cool.
+    -> Huh?
+-> This is a shortcut option with no consequential text.
+
+All done with the shortcut options!
+
+[[Option 1!|Option1]]
+[[Option 2!|Option2]]
+===
+
+--------------------------------------------------------------------------|||
+
+(dialogue
+  (node
+    (title_header
+      (identifier))
+    (comment)
+    (body
+      (line_statement
+        (text))
+      (if_statement
+        (block
+          (line_statement
+            (text))))
+      (command_statement
+        (identifier)
+        (identifier)
+        (identifier)
+        (identifier)
+        (identifier))
+      (set_statement
+        (variable
+          (identifier))
+        (binary_expression
+          (number)
+          (number)))
+      (if_statement
+        (binary_expression
+          (variable
+            (identifier))
+          (number))
+        (block
+          (line_statement
+            (text)))
+        (else_if_clause
+          (binary_expression
+            (variable
+              (identifier))
+            (number))
+          (block
+            (line_statement
+              (text)))
+          (else_clause
+            (block
+              (line_statement
+                (text))))))
+      (shortcut_option_statement
+        (shortcut_option
+          (option_line
+            (text)
+            (line_condition))
+          (option_body
+            (line_statement
+              (text))))
+        (shortcut_option
+          (option_line
+            (text))
+          (option_body
+            (line_statement
+              (text))
+            (shortcut_option_statement
+              (shortcut_option
+                (option_line
+                  (text))
+                (option_body
+                  (line_statement
+                    (text))))
+              (shortcut_option
+                (option_line
+                  (text))))))
+        (shortcut_option
+          (option_line
+            (text))))
+      (line_statement
+        (text))
+      (line_statement
+        (text))
+      (line_statement
+        (text)))))
+
+=============================================================================|||
+Example
+=============================================================================|||
+
+title: Start
+tags: 
+colorID: 0
+position: 592,181
+---
+A: Hey, I'm a character in a script!
+B: And I am too! You are talking to me!
+-> What's going on
+    A: Why this is a demo of the script system!
+    B: And you're in it!
+-> Um ok
+A: How delightful!
+B: What would you prefer to do next?
+-> Leave
+    <<jump Leave>>
+-> Learn more
+    <<jump LearnMore>>
+===
+title: Leave
+tags: 
+colorID: 0
+position: 387,487
+---
+A: Oh, goodbye!
+B: You'll be back soon!
+===
+title: LearnMore
+tags: rawText
+colorID: 0
+position: 763,472
+---
+A: HAHAHA
+===
+
+--------------------------------------------------------------------------|||
+
+(dialogue
+  (node
+    (title_header
+      (identifier))
+    (header
+      (identifier)
+      (header_value))
+    (header
+      (identifier)
+      (header_value))
+    (body
+      (line_statement
+        (text))
+      (line_statement
+        (text))
+      (shortcut_option_statement
+        (shortcut_option
+          (option_line
+            (text))
+          (option_body
+            (line_statement
+              (text))
+            (line_statement
+              (text))))
+        (shortcut_option
+          (option_line
+            (text))))
+      (line_statement
+        (text))
+      (line_statement
+        (text))
+      (shortcut_option_statement
+        (shortcut_option
+          (option_line
+            (text))
+          (option_body
+            (jump_statement
+              (identifier))))
+        (shortcut_option
+          (option_line
+            (text))
+          (option_body
+            (jump_statement
+              (identifier)))))))
+  (node
+    (title_header
+      (identifier))
+    (header
+      (identifier)
+      (header_value))
+    (header
+      (identifier)
+      (header_value))
+    (body
+      (line_statement
+        (text))
+      (line_statement
+        (text))))
+  (node
+    (title_header
+      (identifier))
+    (header
+      (identifier)
+      (header_value))
+    (header
+      (identifier)
+      (header_value))
+    (header
+      (identifier)
+      (header_value))
+    (body
+      (line_statement
+        (text)))))
+
+=============================================================================|||
+Headers
+=============================================================================|||
+
+#file_header
+title: EmptyTags
+tags: 
+---
+In this test, the 'tags' header is provided, but has no value.
+===
+title: Tags
+tags: one two three
+---
+In this test, the 'tags' header is provided, and has three values.
+===
+title: ArbitraryHeaderWithValue
+arbitraryheader: some-arbitrary-text
+---
+In this test, an arbitrary header is defined with some text.
+
+(TODO: If the last header is an arbitrary header, and is empty, a parse error is thrown. This is a bug.)
+===
+title: Comments
+tags: one two three
+// test
+---
+This node demonstrates the use of comments in node headers.
+===
+title: SingleTagOnly
+---
+This node only possesses a single tag, the title.
+===
+title: LotsOfHeaders
+this: node
+contains: lots
+of:
+headers:
+some: are
+blank:
+others: are
+not:
+---
+body empty
+===
+
+--------------------------------------------------------------------------|||
+
+(dialogue
+  (file_hashtag)
+  (node
+    (title_header
+      (identifier))
+    (header
+      (identifier))
+    (body
+      (line_statement
+        (text))))
+  (node
+    (title_header
+      (identifier))
+    (header
+      (identifier)
+      (header_value))
+    (body
+      (line_statement
+        (text))))
+  (node
+    (title_header
+      (identifier))
+    (header
+      (identifier)
+      (header_value))
+    (body
+      (line_statement
+        (text))
+      (line_statement
+        (text))))
+  (node
+    (title_header
+      (identifier))
+    (header
+      (identifier)
+      (header_value))
+    (comment)
+    (body
+      (line_statement
+        (text))))
+  (node
+    (title_header
+      (identifier))
+    (body
+      (line_statement
+        (text))))
+  (node
+    (title_header
+      (identifier))
+    (header
+      (identifier)
+      (header_value))
+    (header
+      (identifier)
+      (header_value))
+    (header
+      (identifier)
+      (header_value))
+    (header
+      (identifier)
+      (header_value))
+    (header
+      (identifier)
+      (header_value))
+    (header
+      (identifier))
+    (body
+      (line_statement
+        (text)))))
+
+=============================================================================|||
+Options
+=============================================================================|||
+
+title: A
+---
+-> Go to B
+    <<jump B>>
+-> Go to C
+    <<jump C>>
+===
+title: B
+---
+Node B
+===
+title: C
+---
+Node C
+===
+
+--------------------------------------------------------------------------|||
+
+(dialogue
+  (node
+    (title_header
+      (identifier))
+    (body
+      (shortcut_option_statement
+        (shortcut_option
+          (option_line
+            (text))
+          (option_body
+            (jump_statement
+              (identifier))))
+        (shortcut_option
+          (option_line
+            (text))
+          (option_body
+            (jump_statement
+              (identifier)))))))
+  (node
+    (title_header
+      (identifier))
+    (body
+      (line_statement
+        (text))))
+  (node
+    (title_header
+      (identifier))
+    (body
+      (line_statement
+        (text)))))
+
+=============================================================================|||
+Sally
+=============================================================================|||
+
+title: Declarations
+---
+<<declare $should_see_ship = false>>
+<<declare $sally_warning = false>>
+===
+title: Sally
+tags: 
+colorID: 0
+position: 524,111
+---
+<<if visited("Sally") is false>>
+    Player: Hey, Sally. #line:794945
+    Sally: Oh! Hi. #line:2dc39b
+    Sally: You snuck up on me. #line:34de2f
+    Sally: Don't do that. #line:dcc2bc
+<<else>>
+    Player: Hey. #line:a8e70c
+    Sally: Hi. #line:305cde
+<<endif>>
+
+<<if not visited("Sally.Watch")>>
+    [[Anything exciting happen on your watch?|Sally.Watch]] #line:5d7a7c
+<<endif>>
+
+<<if $sally_warning and not visited("Sally.Sorry")>>
+    [[Sorry about the console.|Sally.Sorry]] #line:0a7e39
+<<endif>>
+[[See you later.|Sally.Exit]] #line:0facf7
+===
+
+title: Sally_Watch
+tags: 
+colorID: 0
+position: 512,430
+---
+Sally: Not really.  #line:8c3f98
+Sally: Same old nebula, doing the same old thing. #line:24c418
+Sally: Oh, Ship wanted to see you. Go say hi to it. #line:df4eaf
+<<set $should_see_ship to true>>
+<<if visited("Ship") is true>>
+    Player: Already done! #line:1fea6c
+    Sally: Go say hi again. #line:5df323
+<<endif>>
+===
+
+title: Sally_Exit
+tags: 
+colorID: 6
+position: 211,417
+---
+Sally: Bye. #line:60c282
+===
+
+title: Sally_Sorry
+tags: 
+colorID: 0
+position: 827,439
+---
+Sally: Yeah. Don't do it again. #line:d7df49
+===
+
+--------------------------------------------------------------------------|||
+
+(dialogue
+  (node
+    (title_header
+      (identifier))
+    (body
+      (declare_statement
+        (variable
+          (identifier)))
+      (declare_statement
+        (variable
+          (identifier)))))
+  (node
+    (title_header
+      (identifier))
+    (header
+      (identifier)
+      (header_value))
+    (header
+      (identifier)
+      (header_value))
+    (body
+      (if_statement
+        (binary_expression
+          (function_call
+            (identifier)
+            (string)))
+        (block
+          (line_statement
+            (text)
+            (hashtag))
+          (line_statement
+            (text)
+            (hashtag))
+          (line_statement
+            (text)
+            (hashtag))
+          (line_statement
+            (text)
+            (hashtag)))
+        (else_clause
+          (block
+            (line_statement
+              (text)
+              (hashtag))
+            (line_statement
+              (text)
+              (hashtag)))))
+      (if_statement
+        (unary_expression
+          (function_call
+            (identifier)
+            (string)))
+        (block
+          (line_statement
+            (text)
+            (hashtag))))
+      (if_statement
+        (binary_expression
+          (variable
+            (identifier))
+          (unary_expression
+            (function_call
+              (identifier)
+              (string))))
+        (block
+          (line_statement
+            (text)
+            (hashtag))))
+      (line_statement
+        (text)
+        (hashtag))))
+  (node
+    (title_header
+      (identifier))
+    (header
+      (identifier)
+      (header_value))
+    (header
+      (identifier)
+      (header_value))
+    (body
+      (line_statement
+        (text)
+        (hashtag))
+      (line_statement
+        (text)
+        (hashtag))
+      (line_statement
+        (text)
+        (hashtag))
+      (set_statement
+        (variable
+          (identifier)))
+      (if_statement
+        (binary_expression
+          (function_call
+            (identifier)
+            (string)))
+        (block
+          (line_statement
+            (text)
+            (hashtag))
+          (line_statement
+            (text)
+            (hashtag))))))
+  (node
+    (title_header
+      (identifier))
+    (header
+      (identifier)
+      (header_value))
+    (header
+      (identifier)
+      (header_value))
+    (body
+      (line_statement
+        (text)
+        (hashtag))))
+  (node
+    (title_header
+      (identifier))
+    (header
+      (identifier)
+      (header_value))
+    (header
+      (identifier)
+      (header_value))
+    (body
+      (line_statement
+        (text)
+        (hashtag)))))
+
+=============================================================================|||
+Ship
+=============================================================================|||
+
+title: Ship
+tags: 
+colorID: 0
+position: 721,130
+---
+<<if visited("Ship") is false>>
+    Ship: Hey, friend.  #line:5837f2
+    Player: Hi, Ship. #line:ship9
+    Player: How's space? #line:ship10
+    Ship: Oh, man. #line:ship11
+    <<setsprite ShipFace happy>>
+    Ship: It's HUGE! #line:ship12
+    <<setsprite ShipFace neutral>>
+<<else>>
+    <<setsprite ShipFace happy>>
+    Ship: Hey!! #line:ship13
+    <<setsprite ShipFace neutral>>
+<<endif>>
+
+<<if $should_see_ship is true and $sally_warning is false>>
+    Player: Sally said you wanted to see me? #line:ship1
+    <<setsprite ShipFace happy>> 
+    Ship: She totally did!! #line:ship3
+    <<setsprite ShipFace neutral>> 
+    Ship: She wanted me to tell you... #line:ship4
+    Ship: If you ever go off-watch without resetting the console again... #line:ship5
+    <<setsprite ShipFace happy>>
+    Ship: She'll flay you alive! #line:ship6
+    <<set $sally_warning to true>>
+    <<wait 1>>
+    Player: Uh. #line:ship7
+    <<setsprite ShipFace neutral>>
+<<endif>>
+===
+
+--------------------------------------------------------------------------|||
+
+(dialogue
+  (node
+    (title_header
+      (identifier))
+    (header
+      (identifier)
+      (header_value))
+    (header
+      (identifier)
+      (header_value))
+    (body
+      (if_statement
+        (binary_expression
+          (function_call
+            (identifier)
+            (string)))
+        (block
+          (line_statement
+            (text)
+            (hashtag))
+          (line_statement
+            (text)
+            (hashtag))
+          (line_statement
+            (text)
+            (hashtag))
+          (line_statement
+            (text)
+            (hashtag))
+          (command_statement
+            (identifier)
+            (identifier)
+            (identifier))
+          (line_statement
+            (text)
+            (hashtag))
+          (command_statement
+            (identifier)
+            (identifier)
+            (identifier)))
+        (else_clause
+          (block
+            (command_statement
+              (identifier)
+              (identifier)
+              (identifier))
+            (line_statement
+              (text)
+              (hashtag))
+            (command_statement
+              (identifier)
+              (identifier)
+              (identifier)))))
+      (if_statement
+        (binary_expression
+          (binary_expression
+            (variable
+              (identifier)))
+          (binary_expression
+            (variable
+              (identifier))))
+        (block
+          (line_statement
+            (text)
+            (hashtag))
+          (command_statement
+            (identifier)
+            (identifier)
+            (identifier))
+          (line_statement
+            (text)
+            (hashtag))
+          (command_statement
+            (identifier)
+            (identifier)
+            (identifier))
+          (line_statement
+            (text)
+            (hashtag))
+          (line_statement
+            (text)
+            (hashtag))
+          (command_statement
+            (identifier)
+            (identifier)
+            (identifier))
+          (line_statement
+            (text)
+            (hashtag))
+          (set_statement
+            (variable
+              (identifier)))
+          (command_statement
+            (identifier)
+            (number))
+          (line_statement
+            (text)
+            (hashtag))
+          (command_statement
+            (identifier)
+            (identifier)
+            (identifier)))))))
+
+=============================================================================|||
+Enums
+=============================================================================|||
+
+title: Start
+---
+
+// Create a new enum, "Food". Variables of this type can store one of these
+// three cases:
+<<enum Food>>
+    <<case Apple>>
+    <<case Orange>>
+    <<case Pear>>
+<<endenum>>
+
+// Declare a new variable, of this type.
+<<declare $favouriteFood = Food.Apple as Food>>
+
+// The 'as Food' can be left out, because the compiler will figure it out
+<<declare $secondFavouriteFood = Food.Orange>>
+
+// The 'Food' can be left out too, because the compiler will figure it out
+<<declare $thirdFavouriteFood = .Pear>>
+
+// Enum variables can be compared to each other
+<<if $favouriteFood == Food.Apple>>
+    I like apples!
+<<elseif $favouriteFood == Food.Orange>>
+    It's an error if you see this!
+<<else>>
+    It's an error if you see this!
+<<endif>>
+
+<<if $secondFavouriteFood == Food.Orange>>
+    Oranges are okay in a pinch!
+<<else>>
+    It's an error if you see this!
+<<endif>>
+
+// Enum variables can be modified, just like all other variables
+<<set $favouriteFood to Food.Orange>>
+
+// (Just checking that we're not just evaluating all comparisons as true
+// lol)
+<<if $favouriteFood == Food.Apple>>
+    It's an error if you see this!
+<<elseif $favouriteFood != Food.Orange>>
+    It's an error if you see this!
+<<else>>
+    I like oranges now!
+<<endif>>
+
+// You can skip the enum name if Yarn can infer the enum that it came from
+<<set $favouriteFood to .Pear>>
+
+// Yarn can infer the type of an implicitly declared variable, too:
+<<set $aDifferentFood = .Apple>>
+
+// Declare two new enums that have explicit raw values: one of numbers, and
+// one of strings
+
+<<enum Planets>>
+    <<case Mercury = 1>>
+    <<case Venus = 2>>
+    <<case Earth = 3>>
+    <<case Mars = 4>>
+    <<case Jupiter = 5>>
+    <<case Saturn = 6>>
+    <<case Uranus = 7>>
+    <<case Neptune = 8>>
+<<endenum>>
+
+<<enum QuestObjectives>>
+    <<case Objective1 = "DoObjective1">>
+    <<case Objective2 = "DoObjective2">>
+    <<case Objective3 = "DoObjective3">>
+<<endenum>>
+
+<<if string(QuestObjectives.Objective1) == "DoObjective1">>
+    ok 1
+<<else>>
+    error
+<<endif>>
+
+<<if number(Planets.Earth) == 3>>
+    ok 2
+<<else>>
+    error
+<<endif>>
+
+===
+
+--------------------------------------------------------------------------|||
+
+(dialogue
+  (node
+    (title_header
+      (identifier))
+    (comment)
+    (comment)
+    (body
+      (enum_statement
+        (identifier)
+        (enum_case_statement
+          (identifier))
+        (enum_case_statement
+          (identifier))
+        (enum_case_statement
+          (identifier)))
+      (comment)
+      (declare_statement
+        (variable
+          (identifier))
+        (member_expression
+          (identifier)
+          (identifier))
+        (identifier))
+      (comment)
+      (declare_statement
+        (variable
+          (identifier))
+        (member_expression
+          (identifier)
+          (identifier)))
+      (comment)
+      (declare_statement
+        (variable
+          (identifier))
+        (member_expression
+          (identifier)))
+      (comment)
+      (if_statement
+        (binary_expression
+          (variable
+            (identifier))
+          (member_expression
+            (identifier)
+            (identifier)))
+        (block
+          (line_statement
+            (text)))
+        (else_if_clause
+          (binary_expression
+            (variable
+              (identifier))
+            (member_expression
+              (identifier)
+              (identifier)))
+          (block
+            (line_statement
+              (text)))
+          (else_clause
+            (block
+              (line_statement
+                (text))))))
+      (if_statement
+        (binary_expression
+          (variable
+            (identifier))
+          (member_expression
+            (identifier)
+            (identifier)))
+        (block
+          (line_statement
+            (text)))
+        (else_clause
+          (block
+            (line_statement
+              (text)))))
+      (comment)
+      (set_statement
+        (variable
+          (identifier))
+        (member_expression
+          (identifier)
+          (identifier)))
+      (comment)
+      (comment)
+      (if_statement
+        (binary_expression
+          (variable
+            (identifier))
+          (member_expression
+            (identifier)
+            (identifier)))
+        (block
+          (line_statement
+            (text)))
+        (else_if_clause
+          (binary_expression
+            (variable
+              (identifier))
+            (member_expression
+              (identifier)
+              (identifier)))
+          (block
+            (line_statement
+              (text)))
+          (else_clause
+            (block
+              (line_statement
+                (text))))))
+      (comment)
+      (set_statement
+        (variable
+          (identifier))
+        (member_expression
+          (identifier)))
+      (comment)
+      (set_statement
+        (variable
+          (identifier))
+        (member_expression
+          (identifier)))
+      (comment)
+      (comment)
+      (enum_statement
+        (identifier)
+        (enum_case_statement
+          (identifier)
+          (number))
+        (enum_case_statement
+          (identifier)
+          (number))
+        (enum_case_statement
+          (identifier)
+          (number))
+        (enum_case_statement
+          (identifier)
+          (number))
+        (enum_case_statement
+          (identifier)
+          (number))
+        (enum_case_statement
+          (identifier)
+          (number))
+        (enum_case_statement
+          (identifier)
+          (number))
+        (enum_case_statement
+          (identifier)
+          (number)))
+      (enum_statement
+        (identifier)
+        (enum_case_statement
+          (identifier)
+          (string))
+        (enum_case_statement
+          (identifier)
+          (string))
+        (enum_case_statement
+          (identifier)
+          (string)))
+      (if_statement
+        (binary_expression
+          (function_call
+            (identifier)
+            (member_expression
+              (identifier)
+              (identifier)))
+          (string))
+        (block
+          (line_statement
+            (text)))
+        (else_clause
+          (block
+            (line_statement
+              (text)))))
+      (if_statement
+        (binary_expression
+          (function_call
+            (identifier)
+            (member_expression
+              (identifier)
+              (identifier)))
+          (number))
+        (block
+          (line_statement
+            (text)))
+        (else_clause
+          (block
+            (line_statement
+              (text))))))))
+
+=============================================================================|||
+IfStatements
+=============================================================================|||
+
+title: Start
+---
+<<if true>>
+    Player: Hey, Sally. #line:794945
+    Sally: Oh! Hi. #line:2dc39b
+    Sally: You snuck up on me. #line:34de2f
+    Sally: Don't do that. #line:dcc2bc
+<<else>>
+    Player: Hey. #line:a8e70c
+    Sally: Hi. #line:305cde
+<<endif>>
+===
+
+--------------------------------------------------------------------------|||
+
+(dialogue
+  (node
+    (title_header
+      (identifier))
+    (body
+      (if_statement
+        (block
+          (line_statement
+            (text)
+            (hashtag))
+          (line_statement
+            (text)
+            (hashtag))
+          (line_statement
+            (text)
+            (hashtag))
+          (line_statement
+            (text)
+            (hashtag)))
+        (else_clause
+          (block
+            (line_statement
+              (text)
+              (hashtag))
+            (line_statement
+              (text)
+              (hashtag))))))))
+
+=============================================================================|||
+Jumps
+=============================================================================|||
+
+title: Start
+---
+
+
+
+===
+title: NodeNameDestination
+---
+NodeNameDestination
+// Jump to a node based on a constant expression
+<<jump {"NodeNameConstantExpression"}>>
+===
+title: NodeNameConstantExpression
+---
+
+
+
+===
+title: NodeNameVariableExpression
+---
+NodeNameVariableExpression
+===
+
+--------------------------------------------------------------------------|||
+
+(dialogue
+  (node
+    (title_header
+      (identifier)))
+  (node
+    (title_header
+      (identifier))
+    (body
+      (line_statement
+        (text))
+      (comment)
+      (jump_statement
+        (string))))
+  (node
+    (title_header
+      (identifier)))
+  (node
+    (title_header
+      (identifier))
+    (body
+      (line_statement
+        (text)))))
+
+=============================================================================|||
+LinesGroups
+=============================================================================|||
+
+title: Start
+---
+// Scenario: A baker is selling pies.
+
+<<declare $knows_player = false>>
+<<declare $pies_bought = 0>>
+
+// The first time we speak to the baker, she'll say one of these two lines.
+// Depending on whether or not she knows the player, a different line will run.
+<<once>>
+    => Baker: Hey there, friend! Made some fresh pies for you! <<if $knows_player>>
+    => Baker: Hey there! Fresh pies, right out of the oven! <<if not $knows_player>>
+<<endonce>>
+
+// Choose a single line to run.
+// These three will only appear if the player bought a pie earlier.
+=> Baker: Want another? <<if $pies_bought > 0>>
+=> Baker: How about another pie? <<if $pies_bought > 0>>
+=> Baker: Another pie? <<if $pies_bought > 0>>
+// This line will only appear if the player bought a pie AND the baker already knows us.
+=> Baker: Another pie for my best customer? <<if $knows_player && $pies_bought > 0>>
+// These lines can always appear.
+=> Baker: What d'ya say?
+=> Baker: How about it?
+=> Baker: Want one?
+
+-> Buy Pie
+    => Baker: Thank you kindly!
+    => Baker: Pleasure doin' business with you!
+    => Baker: Enjoy!
+    <<set $pies_bought += 1>>
+-> Don't Buy Pie
+    => Baker: Aw, that's a shame!
+    => Baker: Dang, no sale today!
+    => Baker: Come back another time, then!
+
+===
+title: BakerSeesPlayer
+---
+=> Baker: Hey there!
+=> Baker: Fresh pies!
+=> Baker: Fresh and hot pies!
+=> Baker: Popular pies! <<if $pies_bought > 2>>
+===
+
+--------------------------------------------------------------------------|||
+
+(dialogue
+  (node
+    (title_header
+      (identifier))
+    (comment)
+    (body
+      (declare_statement
+        (variable
+          (identifier)))
+      (declare_statement
+        (variable
+          (identifier))
+        (number))
+      (comment)
+      (comment)
+      (once_statement
+        (once_primary_clause
+          (line_group_statement
+            (line_group_item
+              (line_statement
+                (text)
+                (line_condition
+                  (variable
+                    (identifier)))))
+            (line_group_item
+              (line_statement
+                (text)
+                (line_condition
+                  (unary_expression
+                    (variable
+                      (identifier)))))))))
+      (comment)
+      (comment)
+      (line_group_statement
+        (line_group_item
+          (line_statement
+            (text)
+            (line_condition
+              (binary_expression
+                (variable
+                  (identifier))
+                (number))))))
+      (line_group_statement
+        (line_group_item
+          (line_statement
+            (text)
+            (line_condition
+              (binary_expression
+                (variable
+                  (identifier))
+                (number))))))
+      (line_group_statement
+        (line_group_item
+          (line_statement
+            (text)
+            (line_condition
+              (binary_expression
+                (variable
+                  (identifier))
+                (number)))))
+        (comment)
+        (line_group_item
+          (line_statement
+            (text)
+            (line_condition
+              (binary_expression
+                (variable
+                  (identifier))
+                (binary_expression
+                  (variable
+                    (identifier))
+                  (number))))))
+        (comment)
+        (line_group_item
+          (line_statement
+            (text))))
+      (line_group_statement
+        (line_group_item
+          (line_statement
+            (text))))
+      (line_group_statement
+        (line_group_item
+          (line_statement
+            (text))))
+      (shortcut_option_statement
+        (shortcut_option
+          (option_line
+            (text))
+          (option_body
+            (line_group_statement
+              (line_group_item
+                (line_statement
+                  (text)))
+              (line_group_item
+                (line_statement
+                  (text)))
+              (line_group_item
+                (line_statement
+                  (text))))
+            (set_statement
+              (variable
+                (identifier))
+              (number))))
+        (shortcut_option
+          (option_line
+            (text))
+          (option_body
+            (line_group_statement
+              (line_group_item
+                (line_statement
+                  (text)))
+              (line_group_item
+                (line_statement
+                  (text)))
+              (line_group_item
+                (line_statement
+                  (text)))))))))
+  (node
+    (title_header
+      (identifier))
+    (body
+      (line_group_statement
+        (line_group_item
+          (line_statement
+            (text)))
+        (line_group_item
+          (line_statement
+            (text)))
+        (line_group_item
+          (line_statement
+            (text)))
+        (line_group_item
+          (line_statement
+            (text)
+            (line_condition
+              (binary_expression
+                (variable
+                  (identifier))
+                (number)))))))))
+
+=============================================================================|||
+Once
+=============================================================================|||
+
+title: Start
+---
+<<once>>
+    This content is only seen once.
+<<else>>
+    This content is seen on all other occasions.
+<<endonce>>
+
+<<once if $conditionA>>
+    This content is only seen once, and only if $conditionA is true.
+<<endonce>>
+
+-> Option 1 <<once if $conditionB>> // only selectable once, and only if $conditionB is true
+-> Option 2 <<once>> // only selectable once
+-> Option 3 <<if $conditionB>> // only selectable if $conditionB is true
+-> Option 4 // always selectable
+
+=> Item 1 <<once>> // will only appear once
+=> Item 2 <<once if $conditionC>> // will only appear once, and only if $conditionC is true
+=> Item 3 <<if $conditionC>> // will only appear if $conditionC is true
+=> Item 4 // may always appear
+
+Line 1 <<once>> // line will only run once
+Line 2 <<once if $conditionD>> // line will only run once, and only if $conditionD is true
+Line 3 <<if $conditionD>> // line will only run if $conditionD is true
+Line 4 // line will always run
+===
+
+--------------------------------------------------------------------------|||
+
+(dialogue
+  (node
+    (title_header
+      (identifier))
+    (body
+      (once_statement
+        (once_primary_clause
+          (line_statement
+            (text)))
+        (once_alternate_clause
+          (line_statement
+            (text))))
+      (once_statement
+        (variable
+          (identifier))
+        (once_primary_clause
+          (line_statement
+            (text))))
+      (shortcut_option_statement
+        (shortcut_option
+          (option_line
+            (text)
+            (line_condition
+              (variable
+                (identifier)))
+            (comment)))
+        (shortcut_option
+          (option_line
+            (text)
+            (line_condition)
+            (comment)))
+        (shortcut_option
+          (option_line
+            (text)
+            (line_condition
+              (variable
+                (identifier)))
+            (comment)))
+        (shortcut_option
+          (option_line
+            (text))))
+      (line_group_statement
+        (line_group_item
+          (line_statement
+            (text)
+            (line_condition)
+            (comment)))
+        (line_group_item
+          (line_statement
+            (text)
+            (line_condition
+              (variable
+                (identifier)))
+            (comment)))
+        (line_group_item
+          (line_statement
+            (text)
+            (line_condition
+              (variable
+                (identifier)))
+            (comment)))
+        (line_group_item
+          (line_statement
+            (text))))
+      (line_statement
+        (text)
+        (line_condition)
+        (comment))
+      (line_statement
+        (text)
+        (line_condition
+          (variable
+            (identifier)))
+        (comment))
+      (line_statement
+        (text)
+        (line_condition
+          (variable
+            (identifier)))
+        (comment))
+      (line_statement
+        (text)))))
