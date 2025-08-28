@@ -1,0 +1,39 @@
+{
+  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/config.schema.json",
+  "grammars": [
+    {
+      "name": "yarn",
+      "camelcase": "Yarn",
+      "title": "Yarn",
+      "scope": "source.yarn",
+      "file-types": [
+        "yarn"
+      ],
+      "injection-regex": "^yarn$",
+      "class-name": "TreeSitterYarn"
+    }
+  ],
+  "metadata": {
+    "version": "0.1.0",
+    "license": "Unlicense",
+    "description": "Yarn grammar for tree-sitter",
+    "authors": [
+      {
+        "name": "lpnh",
+        "email": "paniguel.lpnh@gmail.com"
+      }
+    ],
+    "links": {
+      "repository": "https://github.com/lpnh/tree-sitter-yarn"
+    }
+  },
+  "bindings": {
+    "c": true,
+    "go": true,
+    "node": true,
+    "python": true,
+    "rust": true,
+    "swift": true,
+    "zig": false
+  }
+}
