@@ -582,7 +582,8 @@ Sally: Yeah. Don't do it again. #line:d7df49
         (binary_expression
           (function_call
             (identifier)
-            (string)))
+            (arguments
+              (string))))
         (block
           (line_statement
             (text)
@@ -608,7 +609,8 @@ Sally: Yeah. Don't do it again. #line:d7df49
         (unary_expression
           (function_call
             (identifier)
-            (string)))
+            (arguments
+              (string))))
         (block
           (line_statement
             (text)
@@ -620,7 +622,8 @@ Sally: Yeah. Don't do it again. #line:d7df49
           (unary_expression
             (function_call
               (identifier)
-              (string))))
+              (arguments
+                (string)))))
         (block
           (line_statement
             (text)
@@ -654,7 +657,8 @@ Sally: Yeah. Don't do it again. #line:d7df49
         (binary_expression
           (function_call
             (identifier)
-            (string)))
+            (arguments
+              (string))))
         (block
           (line_statement
             (text)
@@ -745,7 +749,8 @@ position: 721,130
         (binary_expression
           (function_call
             (identifier)
-            (string)))
+            (arguments
+              (string))))
         (block
           (line_statement
             (text)
@@ -1090,9 +1095,10 @@ title: Start
         (binary_expression
           (function_call
             (identifier)
-            (member_expression
-              (identifier)
-              (identifier)))
+            (arguments
+              (member_expression
+                (identifier)
+                (identifier))))
           (string))
         (block
           (line_statement
@@ -1105,9 +1111,10 @@ title: Start
         (binary_expression
           (function_call
             (identifier)
-            (member_expression
-              (identifier)
-              (identifier)))
+            (arguments
+              (member_expression
+                (identifier)
+                (identifier))))
           (number))
         (block
           (line_statement

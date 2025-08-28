@@ -281,8 +281,10 @@ module.exports = grammar({
     },
 
     function_call: $ =>
+      seq(field('function', $.identifier), field('arguments', $.arguments)),
+
+    arguments: $ =>
       seq(
-        field('function', $.identifier),
         '(',
         optional(seq($._expression, repeat(seq(',', $._expression)))),
         ')',

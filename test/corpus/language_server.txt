@@ -38,96 +38,118 @@ title: ActionDeclarations
       (line_statement
         (function_call
           (identifier)
-          (number)))
+          (arguments
+            (number))))
       (line_statement
         (function_call
           (identifier)
-          (string)))
+          (arguments
+            (string))))
       (line_statement
         (function_call
           (identifier)
-          (number)))
+          (arguments
+            (number))))
       (line_statement
         (function_call
           (identifier)
-          (number)))
+          (arguments
+            (number))))
       (line_statement
         (function_call
           (identifier)
-          (string)))
+          (arguments
+            (string))))
       (line_statement
         (function_call
           (identifier)
-          (string)))
-      (line_statement
-        (function_call
-          (identifier)))
-      (line_statement
-        (function_call
-          (identifier)
-          (number)
-          (number)))
+          (arguments
+            (string))))
       (line_statement
         (function_call
           (identifier)
-          (number)
-          (number)))
+          (arguments)))
       (line_statement
         (function_call
           (identifier)
-          (number)))
+          (arguments
+            (number)
+            (number))))
       (line_statement
         (function_call
           (identifier)
-          (number)))
+          (arguments
+            (number)
+            (number))))
       (line_statement
         (function_call
           (identifier)
-          (number)
-          (number)))
+          (arguments
+            (number))))
       (line_statement
         (function_call
           (identifier)
-          (number)))
+          (arguments
+            (number))))
       (line_statement
         (function_call
           (identifier)
-          (number)))
+          (arguments
+            (number)
+            (number))))
       (line_statement
         (function_call
           (identifier)
-          (number)))
+          (arguments
+            (number))))
       (line_statement
         (function_call
           (identifier)
-          (number)))
+          (arguments
+            (number))))
       (line_statement
         (function_call
           (identifier)
-          (number)))
+          (arguments
+            (number))))
       (line_statement
         (function_call
           (identifier)
-          (number)))
+          (arguments
+            (number))))
       (line_statement
         (function_call
           (identifier)
-          (string)
-          (number)))
+          (arguments
+            (number))))
       (line_statement
         (function_call
           (identifier)
-          (number)
-          (number)))
+          (arguments
+            (number))))
       (line_statement
         (function_call
           (identifier)
-          (number)
-          (number)))
+          (arguments
+            (string)
+            (number))))
       (line_statement
         (function_call
           (identifier)
-          (string))))))
+          (arguments
+            (number)
+            (number))))
+      (line_statement
+        (function_call
+          (identifier)
+          (arguments
+            (number)
+            (number))))
+      (line_statement
+        (function_call
+          (identifier)
+          (arguments
+            (string)))))))
 
 =============================================================================|||
 NodeGroups
@@ -296,6 +318,131 @@ title: Start
           (line_statement
             (text)))
         (line_group_item
+          (line_statement
+            (text)))))))
+
+=============================================================================|||
+ActionDeclarationUsage
+=============================================================================|||
+
+title: ActionDeclarationUsage
+---
+
+<<static_command_no_docs>>
+<<static_command_no_params>>
+<<static_command_with_params "test" 42>>
+<<instance_command_no_params>>
+<<instance_command_with_params Target "test" 42>>
+<<command_nested_in_parent_class>>
+
+<<declare $result = 0>>
+<<set $result = function_with_params(1,"2")>>
+<<set $result = function_with_params_array(1,2,3,4)>>
+
+<<unknown_command>>
+<<set $result = unknown_function()>>
+
+===
+
+-----------------------------------------------------------------------------|||
+
+(dialogue
+  (node
+    (title_header
+      (identifier))
+    (body
+      (command_statement
+        (identifier))
+      (command_statement
+        (identifier))
+      (command_statement
+        (identifier)
+        (string)
+        (number))
+      (command_statement
+        (identifier))
+      (command_statement
+        (identifier)
+        (identifier)
+        (string)
+        (number))
+      (command_statement
+        (identifier))
+      (declare_statement
+        (variable
+          (identifier))
+        (number))
+      (set_statement
+        (variable
+          (identifier))
+        (function_call
+          (identifier)
+          (arguments
+            (number)
+            (string))))
+      (set_statement
+        (variable
+          (identifier))
+        (function_call
+          (identifier)
+          (arguments
+            (number)
+            (number)
+            (number)
+            (number))))
+      (command_statement
+        (identifier))
+      (set_statement
+        (variable
+          (identifier))
+        (function_call
+          (identifier)
+          (arguments))))))
+
+=============================================================================|||
+FunctionCalls
+=============================================================================|||
+
+title: FunctionCalls
+---
+// This is allowed, because 'dice' is a known function.
+<<if dice(6) == 6>>
+    Pass 1
+<<endif>>
+
+// This is allowed, because if a function doesn't exist, the compiler will infer its signature.
+<<if doesnotexist(6) == 6>>
+    Pass 2
+<<endif>>
+===
+
+-----------------------------------------------------------------------------|||
+
+(dialogue
+  (node
+    (title_header
+      (identifier))
+    (comment)
+    (body
+      (if_statement
+        (binary_expression
+          (function_call
+            (identifier)
+            (arguments
+              (number)))
+          (number))
+        (block
+          (line_statement
+            (text))))
+      (comment)
+      (if_statement
+        (binary_expression
+          (function_call
+            (identifier)
+            (arguments
+              (number)))
+          (number))
+        (block
           (line_statement
             (text)))))))
 
@@ -507,8 +654,10 @@ title: Start
       (if_statement
         (function_call
           (identifier)
-          (number)))
+          (arguments
+            (number))))
       (if_statement
         (function_call
           (identifier)
-          (number))))))
+          (arguments
+            (number)))))))
