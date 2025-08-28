@@ -8,7 +8,7 @@
 // @ts-check
 
 module.exports = grammar({
-  name: 'yarn_spinner',
+  name: 'yarn',
 
   conflicts: $ => [[$.line_group_statement]],
 

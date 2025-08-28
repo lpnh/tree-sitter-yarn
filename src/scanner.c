@@ -206,7 +206,7 @@ static bool scan_indent_dedent(Scanner *scanner, TSLexer *lexer,
 
 // Create a new scanner - fresh out of the factory
 // This is called once when Tree-sitter first loads our scanner
-void *tree_sitter_yarn_spinner_external_scanner_create() {
+void *tree_sitter_yarn_external_scanner_create() {
   // Allocate memory for our scanner state, initialized to zeros
   Scanner *scanner = calloc(1, sizeof(Scanner));
 
@@ -223,7 +223,7 @@ void *tree_sitter_yarn_spinner_external_scanner_create() {
 
 // Clean up after ourselves - because memory leaks are not cool
 // This is called when Tree-sitter is done with our scanner (usually on exit)
-void tree_sitter_yarn_spinner_external_scanner_destroy(void *payload) {
+void tree_sitter_yarn_external_scanner_destroy(void *payload) {
   Scanner *scanner = (Scanner *)payload;
 
   if (scanner) {
@@ -246,7 +246,7 @@ void tree_sitter_yarn_spinner_external_scanner_destroy(void *payload) {
  * This is like creating a checkpoint, but for parsing state.
  * Tree-sitter handles when to save/restore; we just handle the how.
  */
-unsigned tree_sitter_yarn_spinner_external_scanner_serialize(void *payload,
+unsigned tree_sitter_yarn_external_scanner_serialize(void *payload,
                                                              char *buffer) {
   Scanner *scanner = (Scanner *)payload;
   if (!scanner)
@@ -285,7 +285,7 @@ unsigned tree_sitter_yarn_spinner_external_scanner_serialize(void *payload,
 }
 
 // Deserialization - here we restore our state, like loading the checkpoint
-void tree_sitter_yarn_spinner_external_scanner_deserialize(void *payload,
+void tree_sitter_yarn_external_scanner_deserialize(void *payload,
                                                            const char *buffer,
                                                            unsigned length) {
   Scanner *scanner = (Scanner *)payload;
@@ -336,7 +336,7 @@ void tree_sitter_yarn_spinner_external_scanner_deserialize(void *payload,
  * Return true = Yes, there's a token here somewhere, check lexer->result_symbol
  * Return false = Nope, go check elsewhere
  */
-bool tree_sitter_yarn_spinner_external_scanner_scan(void *payload,
+bool tree_sitter_yarn_external_scanner_scan(void *payload,
                                                     TSLexer *lexer,
                                                     const bool *valid_symbols) {
   // Where's my scanner? There's my scanner
