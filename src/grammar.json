@@ -257,10 +257,6 @@
               "name": "if_statement"
             },
             {
-              "type": "STRING",
-              "value": "<<endenum>>"
-            },
-            {
               "type": "SYMBOL",
               "name": "set_statement"
             },
@@ -1128,16 +1124,15 @@
       ]
     },
     "line_group_statement": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "REPEAT1",
-          "content": {
-            "type": "SYMBOL",
-            "name": "line_group_item"
-          }
+      "type": "PREC_RIGHT",
+      "value": 0,
+      "content": {
+        "type": "REPEAT1",
+        "content": {
+          "type": "SYMBOL",
+          "name": "line_group_item"
         }
-      ]
+      }
     },
     "line_group_item": {
       "type": "SEQ",
@@ -1816,11 +1811,7 @@
       "name": "comment"
     }
   ],
-  "conflicts": [
-    [
-      "line_group_statement"
-    ]
-  ],
+  "conflicts": [],
   "precedences": [],
   "externals": [
     {

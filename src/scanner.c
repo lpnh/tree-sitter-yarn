@@ -247,7 +247,7 @@ void tree_sitter_yarn_external_scanner_destroy(void *payload) {
  * Tree-sitter handles when to save/restore; we just handle the how.
  */
 unsigned tree_sitter_yarn_external_scanner_serialize(void *payload,
-                                                             char *buffer) {
+                                                     char *buffer) {
   Scanner *scanner = (Scanner *)payload;
   if (!scanner)
     return 0; // Nothing to save, nothing to lose
@@ -286,8 +286,8 @@ unsigned tree_sitter_yarn_external_scanner_serialize(void *payload,
 
 // Deserialization - here we restore our state, like loading the checkpoint
 void tree_sitter_yarn_external_scanner_deserialize(void *payload,
-                                                           const char *buffer,
-                                                           unsigned length) {
+                                                   const char *buffer,
+                                                   unsigned length) {
   Scanner *scanner = (Scanner *)payload;
   if (!scanner)
     return; // No scanner, no state
@@ -336,9 +336,8 @@ void tree_sitter_yarn_external_scanner_deserialize(void *payload,
  * Return true = Yes, there's a token here somewhere, check lexer->result_symbol
  * Return false = Nope, go check elsewhere
  */
-bool tree_sitter_yarn_external_scanner_scan(void *payload,
-                                                    TSLexer *lexer,
-                                                    const bool *valid_symbols) {
+bool tree_sitter_yarn_external_scanner_scan(void *payload, TSLexer *lexer,
+                                            const bool *valid_symbols) {
   // Where's my scanner? There's my scanner
   Scanner *scanner = (Scanner *)payload;
   if (!scanner)

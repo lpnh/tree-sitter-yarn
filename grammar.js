@@ -10,7 +10,7 @@
 module.exports = grammar({
   name: 'yarn',
 
-  conflicts: $ => [[$.line_group_statement]],
+  // conflicts: $ => [[]],
 
   externals: $ => [$._indent, $._dedent],
 
@@ -72,7 +72,6 @@ module.exports = grammar({
       seq(
         choice(
           $.if_statement,
-          '<<endenum>>',
           $.set_statement,
           $.call_statement,
           $.declare_statement,
@@ -224,14 +223,9 @@ module.exports = grammar({
     option_body: $ => seq($._indent, repeat($._statement), $._dedent),
 
     // Line group statement
-    line_group_statement: $ => seq(repeat1($.line_group_item)),
+    line_group_statement: $ => prec.right(repeat1($.line_group_item)),
 
-    line_group_item: $ =>
-      seq(
-        '=>',
-        $.line_statement,
-        // optional($._statement),
-      ),
+    line_group_item: $ => seq('=>', $.line_statement),
 
     // Expressions
     _expression: $ =>
