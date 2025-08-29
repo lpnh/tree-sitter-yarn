@@ -10,7 +10,7 @@
 module.exports = grammar({
   name: 'yarn',
 
-  // conflicts: $ => [[]],
+  conflicts: $ => [[$.else_clause], [$.else_if_clause]],
 
   externals: $ => [$._indent, $._dedent],
 
@@ -77,7 +77,7 @@ module.exports = grammar({
           $.declare_statement,
           $.enum_statement,
           $.jump_statement,
-          '<<return>>',
+          $.return_statement,
           $.once_statement,
           $.command_statement,
         ),
@@ -109,21 +109,24 @@ module.exports = grammar({
         seq('<<', 'if', field('condition', $._expression), '>>'),
         field('consequence', alias(repeat($._statement), $.block)),
         optional(field('alternative', choice($.else_if_clause, $.else_clause))),
-        '<<endif>>',
+        seq('<<', 'endif', '>>'),
       ),
 
     else_if_clause: $ =>
-      seq(
-        repeat1(
-          seq(
-            seq('<<elseif', field('condition', $._expression), '>>'),
-            field('consequence', alias(repeat($._statement), $.block)),
+      prec.right(
+        seq(
+          repeat1(
+            seq(
+              seq(seq('<<', 'elseif'), field('condition', $._expression), '>>'),
+              field('consequence', alias(repeat($._statement), $.block)),
+            ),
           ),
+          field('alternative', optional($.else_clause)),
         ),
-        field('alternative', optional($.else_clause)),
       ),
 
-    else_clause: $ => seq('<<else>>', alias(repeat($._statement), $.block)),
+    else_clause: $ =>
+      seq(seq('<<', 'else', '>>'), alias(repeat($._statement), $.block)),
 
     // Set statement
     set_statement: $ =>
@@ -144,10 +147,22 @@ module.exports = grammar({
 
     // Command statement - generic commands that don't match specific patterns
     command_statement: $ =>
-      seq('<<', $._command_statement_args, '>>', repeat($.hashtag)),
+      seq(
+        '<<',
+        repeat1(
+          choice(
+            $.command_text,
+            $.number,
+            $.string,
+            $.identifier,
+            $._inline_expression,
+          ),
+        ),
+        '>>',
+        repeat($.hashtag),
+      ),
 
-    _command_statement_args: $ =>
-      repeat1(choice($.identifier, $.string, $.number, $._inline_expression)),
+    command_text: _ => token(prec(-1, /[^>{\r\n]+/)),
 
     // Declare statement
     declare_statement: $ =>
@@ -188,6 +203,9 @@ module.exports = grammar({
         seq('<<', 'detour', choice($.identifier, $._inline_expression), '>>'),
       ),
 
+    // Return statement
+    return_statement: _ => seq('<<', 'return', '>>'),
+
     // Once statement
     once_statement: $ =>
       seq(
@@ -216,7 +234,7 @@ module.exports = grammar({
     shortcut_option: $ =>
       seq(
         '->',
-        field('text', alias($.line_statement, $.option_line)),
+        alias($.line_statement, $.option_line),
         optional(field('body', $.option_body)),
       ),
 
@@ -239,8 +257,7 @@ module.exports = grammar({
         $.string,
         $.variable,
         $.identifier,
-        'true',
-        'false',
+        $.boolean,
         'null',
       ),
 
@@ -302,6 +319,8 @@ module.exports = grammar({
 
     string: _ =>
       token(seq('"', repeat(choice(/[^"\\\r\n]/, /\\"/, /\\\\/)), '"')),
+
+    boolean: _ => choice('true', 'false'),
 
     // Identifiers
     variable: $ => seq('$', $.identifier),

@@ -182,7 +182,8 @@ Guard: None shall pass this point!
       (header_when_expression
         (binary_expression
           (variable
-            (identifier)))))
+            (identifier))
+          (boolean))))
     (comment)
     (body
       (line_statement
@@ -198,7 +199,8 @@ Guard: None shall pass this point!
       (header_when_expression
         (binary_expression
           (variable
-            (identifier)))))
+            (identifier))
+          (boolean))))
     (comment)
     (body
       (line_statement
@@ -593,7 +595,8 @@ title: CodeCompletionTests
           (number)))
       (declare_statement
         (variable
-          (identifier)))
+          (identifier))
+        (boolean))
       (declare_statement
         (variable
           (identifier))
@@ -609,7 +612,8 @@ title: CodeCompletionTests
             (binary_expression
               (variable
                 (identifier))
-              (unary_expression)))))
+              (unary_expression
+                (boolean))))))
       (line_statement
         (text))
       (line_statement

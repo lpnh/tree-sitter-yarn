@@ -137,6 +137,7 @@ All done with the shortcut options!
       (line_statement
         (text))
       (if_statement
+        (boolean)
         (block
           (line_statement
             (text))))
@@ -176,7 +177,8 @@ All done with the shortcut options!
         (shortcut_option
           (option_line
             (text)
-            (line_condition))
+            (line_condition
+              (boolean)))
           (option_body
             (line_statement
               (text))))
@@ -564,10 +566,12 @@ Sally: Yeah. Don't do it again. #line:d7df49
     (body
       (declare_statement
         (variable
-          (identifier)))
+          (identifier))
+        (boolean))
       (declare_statement
         (variable
-          (identifier)))))
+          (identifier))
+        (boolean))))
   (node
     (title_header
       (identifier))
@@ -583,7 +587,8 @@ Sally: Yeah. Don't do it again. #line:d7df49
           (function_call
             (identifier)
             (arguments
-              (string))))
+              (string)))
+          (boolean))
         (block
           (line_statement
             (text)
@@ -652,13 +657,15 @@ Sally: Yeah. Don't do it again. #line:d7df49
         (hashtag))
       (set_statement
         (variable
-          (identifier)))
+          (identifier))
+        (boolean))
       (if_statement
         (binary_expression
           (function_call
             (identifier)
             (arguments
-              (string))))
+              (string)))
+          (boolean))
         (block
           (line_statement
             (text)
@@ -750,7 +757,8 @@ position: 721,130
           (function_call
             (identifier)
             (arguments
-              (string))))
+              (string)))
+          (boolean))
         (block
           (line_statement
             (text)
@@ -792,10 +800,12 @@ position: 721,130
         (binary_expression
           (binary_expression
             (variable
-              (identifier)))
+              (identifier))
+            (boolean))
           (binary_expression
             (variable
-              (identifier))))
+              (identifier))
+            (boolean)))
         (block
           (line_statement
             (text)
@@ -826,7 +836,8 @@ position: 721,130
             (hashtag))
           (set_statement
             (variable
-              (identifier)))
+              (identifier))
+            (boolean))
           (command_statement
             (identifier)
             (number))
@@ -1149,6 +1160,7 @@ title: Start
       (identifier))
     (body
       (if_statement
+        (boolean)
         (block
           (line_statement
             (text)
@@ -1282,7 +1294,8 @@ title: BakerSeesPlayer
     (body
       (declare_statement
         (variable
-          (identifier)))
+          (identifier))
+        (boolean))
       (declare_statement
         (variable
           (identifier))

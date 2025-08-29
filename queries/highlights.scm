@@ -15,6 +15,8 @@
 
 (string) @string
 
+(boolean) @boolean
+
 ; Punctuation
 [
   ":"
@@ -64,6 +66,9 @@
 ; Keywords
 [
   "if"
+  "elseif"
+  "else"
+  "endif"
   "when"
 ] @keyword.conditional
 
@@ -77,6 +82,7 @@
   "enum"
   "jump"
   "once"
+  "return"
   "set"
   "title"
 ] @keyword
