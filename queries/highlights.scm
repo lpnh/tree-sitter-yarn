@@ -60,9 +60,6 @@
   "||"
 ] @operator
 
-; Comments
-(comment) @comment
-
 ; Keywords
 [
   "if"
@@ -92,15 +89,27 @@
   ">>"
 ] @keyword.directive
 
-; Function calls
-(function_call
-  function: (identifier) @function.call)
-
 ; Arrows
 [
   "->"
   "=>"
 ] @keyword
 
-; "Alice: Hello there!"
+; Comments
+(comment) @comment
+
+; Tags
+(header) @comment
+
+(header
+  header_key: (identifier) @comment)
+
+; Hashtags
+(hashtag) @comment
+
+; Function calls
+(function_call
+  function: (identifier) @function.call)
+
+; Dialog text
 (text) @text
