@@ -253,6 +253,8 @@ A: HAHAHA
     (title_header
       (identifier))
     (header
+      (identifier))
+    (header
       (identifier)
       (header_value))
     (header
@@ -294,6 +296,8 @@ A: HAHAHA
               (identifier)))))))
   (node
     (title_header
+      (identifier))
+    (header
       (identifier))
     (header
       (identifier)
@@ -425,11 +429,14 @@ body empty
       (identifier)
       (header_value))
     (header
-      (identifier)
-      (header_value))
+      (identifier))
+    (header
+      (identifier))
     (header
       (identifier)
       (header_value))
+    (header
+      (identifier))
     (header
       (identifier)
       (header_value))
@@ -576,6 +583,8 @@ Sally: Yeah. Don't do it again. #line:d7df49
     (title_header
       (identifier))
     (header
+      (identifier))
+    (header
       (identifier)
       (header_value))
     (header
@@ -640,6 +649,8 @@ Sally: Yeah. Don't do it again. #line:d7df49
     (title_header
       (identifier))
     (header
+      (identifier))
+    (header
       (identifier)
       (header_value))
     (header
@@ -677,6 +688,8 @@ Sally: Yeah. Don't do it again. #line:d7df49
     (title_header
       (identifier))
     (header
+      (identifier))
+    (header
       (identifier)
       (header_value))
     (header
@@ -688,6 +701,8 @@ Sally: Yeah. Don't do it again. #line:d7df49
         (hashtag))))
   (node
     (title_header
+      (identifier))
+    (header
       (identifier))
     (header
       (identifier)
@@ -744,6 +759,8 @@ position: 721,130
 (dialogue
   (node
     (title_header
+      (identifier))
+    (header
       (identifier))
     (header
       (identifier)

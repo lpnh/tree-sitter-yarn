@@ -459,6 +459,16 @@
     "type": "declare_statement",
     "named": true,
     "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "variable",
+            "named": true
+          }
+        ]
+      },
       "type": {
         "multiple": false,
         "required": false,
@@ -468,53 +478,57 @@
             "named": true
           }
         ]
+      },
+      "value": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "binary_expression",
+            "named": true
+          },
+          {
+            "type": "boolean",
+            "named": true
+          },
+          {
+            "type": "function_call",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "member_expression",
+            "named": true
+          },
+          {
+            "type": "null",
+            "named": false
+          },
+          {
+            "type": "number",
+            "named": true
+          },
+          {
+            "type": "paren_expression",
+            "named": true
+          },
+          {
+            "type": "string",
+            "named": true
+          },
+          {
+            "type": "unary_expression",
+            "named": true
+          },
+          {
+            "type": "variable",
+            "named": true
+          }
+        ]
       }
-    },
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "binary_expression",
-          "named": true
-        },
-        {
-          "type": "boolean",
-          "named": true
-        },
-        {
-          "type": "function_call",
-          "named": true
-        },
-        {
-          "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "member_expression",
-          "named": true
-        },
-        {
-          "type": "number",
-          "named": true
-        },
-        {
-          "type": "paren_expression",
-          "named": true
-        },
-        {
-          "type": "string",
-          "named": true
-        },
-        {
-          "type": "unary_expression",
-          "named": true
-        },
-        {
-          "type": "variable",
-          "named": true
-        }
-      ]
     }
   },
   {
@@ -774,7 +788,7 @@
     "type": "header",
     "named": true,
     "fields": {
-      "key": {
+      "header_key": {
         "multiple": false,
         "required": true,
         "types": [
@@ -784,7 +798,7 @@
           }
         ]
       },
-      "value": {
+      "header_value": {
         "multiple": false,
         "required": false,
         "types": [
@@ -1151,35 +1165,28 @@
   {
     "type": "node",
     "named": true,
-    "fields": {
-      "body": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "body",
-            "named": true
-          }
-        ]
-      },
-      "header": {
-        "multiple": true,
-        "required": true,
-        "types": [
-          {
-            "type": "header",
-            "named": true
-          },
-          {
-            "type": "title_header",
-            "named": true
-          },
-          {
-            "type": "when_header",
-            "named": true
-          }
-        ]
-      }
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "body",
+          "named": true
+        },
+        {
+          "type": "header",
+          "named": true
+        },
+        {
+          "type": "title_header",
+          "named": true
+        },
+        {
+          "type": "when_header",
+          "named": true
+        }
+      ]
     }
   },
   {

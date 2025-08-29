@@ -27,17 +27,15 @@ module.exports = grammar({
     // Node
     node: $ =>
       seq(
-        field(
-          'header',
-          repeat1(choice($.title_header, $.when_header, $.header)),
-        ),
+        repeat1(choice($.title_header, $.when_header, $.header)),
         '---',
-        field('body', alias(repeat($._statement), $.body)),
+        alias(repeat($._statement), $.body),
         '===',
       ),
 
     // Headers
-    title_header: $ => seq('title', ':', field('title', $.identifier)),
+    title_header: $ =>
+      seq('title', ':', field('title', $.identifier), $._newline),
 
     when_header: $ => seq('when', ':', field('expr', $.header_when_expression)),
 
@@ -51,9 +49,10 @@ module.exports = grammar({
     header: $ =>
       prec.right(
         seq(
-          field('key', $.identifier),
+          field('header_key', $.identifier),
           ':',
-          optional(field('value', $.header_value)),
+          optional(field('header_value', $.header_value)),
+          $._newline,
         ),
       ),
 
@@ -169,9 +168,9 @@ module.exports = grammar({
       seq(
         '<<',
         'declare',
-        $.variable,
+        field('name', $.variable),
         choice('=', 'to'),
-        $._expression,
+        field('value', $._expression),
         optional(seq('as', field('type', $.identifier))),
         '>>',
       ),
