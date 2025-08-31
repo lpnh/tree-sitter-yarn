@@ -1,4 +1,47 @@
 =============================================================================|||
+AnalysisTest
+=============================================================================|||
+
+title: Start
+---
+// testing
+
+<<declare $foo = 0>> // used
+<<declare $bar = 0>> // written to but never read
+
+<<set $foo to 1>>
+<<set $bar to $foo>>
+===
+
+-----------------------------------------------------------------------------|||
+
+(dialogue
+  (node
+    (title_header
+      (identifier))
+    (comment)
+    (body
+      (declare_statement
+        (variable
+          (identifier))
+        (number))
+      (comment)
+      (declare_statement
+        (variable
+          (identifier))
+        (number))
+      (comment)
+      (set_statement
+        (variable
+          (identifier))
+        (number))
+      (set_statement
+        (variable
+          (identifier))
+        (variable
+          (identifier))))))
+
+=============================================================================|||
 Basic
 =============================================================================|||
 
@@ -496,6 +539,168 @@ Node C
     (title_header
       (identifier))
     (body
+      (line_statement
+        (text)))))
+
+=============================================================================|||
+RandomOptions
+=============================================================================|||
+
+title: Start
+---
+// Randomizing options
+
+These options should be shuffled:
+
+<<shuffleNextOptions>>
+-> One
+-> Two
+-> Three
+-> Four
+
+These options should NOT be shuffled:
+
+-> One
+-> Two
+-> Three
+-> Four
+
+These options should NOT be shuffled
+
+-> One: Select this option to see shuffled options.
+	<<shuffleNextOptions>>
+	-> One
+	-> Two
+	-> Three
+	-> Four
+-> Two: Select this option to do nothing.
+
+
+These options should NOT be shuffled:
+
+-> One
+-> Two
+-> Three
+-> Four
+
+These options should be shuffled, 50% of the time:
+
+<<shuffleNextOptions>>
+-> One
+-> Two
+
+These options should be shuffled:
+
+<<shuffleNextOptions>>
+
+[[One|One]]
+[[Two|One]]
+[[Three|One]]
+[[Four|One]]
+
+===
+
+-----------------------------------------------------------------------------|||
+
+(dialogue
+  (node
+    (title_header
+      (identifier))
+    (comment)
+    (body
+      (line_statement
+        (text))
+      (command_statement
+        (identifier))
+      (shortcut_option_statement
+        (shortcut_option
+          (option_line
+            (text)))
+        (shortcut_option
+          (option_line
+            (text)))
+        (shortcut_option
+          (option_line
+            (text)))
+        (shortcut_option
+          (option_line
+            (text))))
+      (line_statement
+        (text))
+      (shortcut_option_statement
+        (shortcut_option
+          (option_line
+            (text)))
+        (shortcut_option
+          (option_line
+            (text)))
+        (shortcut_option
+          (option_line
+            (text)))
+        (shortcut_option
+          (option_line
+            (text))))
+      (line_statement
+        (text))
+      (shortcut_option_statement
+        (shortcut_option
+          (option_line
+            (text))
+          (option_body
+            (command_statement
+              (identifier))
+            (shortcut_option_statement
+              (shortcut_option
+                (option_line
+                  (text)))
+              (shortcut_option
+                (option_line
+                  (text)))
+              (shortcut_option
+                (option_line
+                  (text)))
+              (shortcut_option
+                (option_line
+                  (text))))))
+        (shortcut_option
+          (option_line
+            (text))))
+      (line_statement
+        (text))
+      (shortcut_option_statement
+        (shortcut_option
+          (option_line
+            (text)))
+        (shortcut_option
+          (option_line
+            (text)))
+        (shortcut_option
+          (option_line
+            (text)))
+        (shortcut_option
+          (option_line
+            (text))))
+      (line_statement
+        (text))
+      (command_statement
+        (identifier))
+      (shortcut_option_statement
+        (shortcut_option
+          (option_line
+            (text)))
+        (shortcut_option
+          (option_line
+            (text))))
+      (line_statement
+        (text))
+      (command_statement
+        (identifier))
+      (line_statement
+        (text))
+      (line_statement
+        (text))
+      (line_statement
+        (text))
       (line_statement
         (text)))))
 

@@ -37,13 +37,13 @@ module.exports = grammar({
     title_header: $ =>
       seq('title', ':', field('title', $.identifier), $._newline),
 
-    when_header: $ => seq('when', ':', field('expr', $.header_when_expression)),
+    when_header: $ => seq('when', ':', $.header_when_expression),
 
     header_when_expression: $ =>
       choice(
         $._expression,
         'always',
-        seq('once', optional(seq('if', $._expression))),
+        seq('once', optional(field('condition', seq('if', $._expression)))),
       ),
 
     header: $ =>
@@ -132,12 +132,12 @@ module.exports = grammar({
       seq(
         '<<',
         'set',
-        $.variable,
+        field('name', $.variable),
         field(
           'operator',
           choice(choice('=', 'to'), '+=', '-=', '*=', '/=', '%='),
         ),
-        $._expression,
+        field('value', $._expression),
         '>>',
       ),
 
