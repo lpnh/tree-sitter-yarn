@@ -1,4 +1,301 @@
 =============================================================================|||
+Commands
+=============================================================================|||
+
+title: Start
+---
+// Testing commands
+
+<<flip Harley3 +1>>
+
+// Commands that begin with keywords
+<<toggle>>
+
+<<settings>>
+
+<<iffy>>
+
+<<nulled>>
+
+<<orion>>
+
+<<andorian>>
+
+<<note>>
+
+<<isActive>>
+
+<<returnToMainMenu>>
+
+<<oncee>>
+
+<<enumerated>>
+
+<<endenumerated>>
+
+<<cased>>
+
+<<locality>>
+
+<<detouring>>
+
+// Commands with a single character
+<<p>>
+
+// Commands with punctuation
+//<<!@#$%^&*()⁄€‹›ﬁﬂ‡°·‚‘-=_+>>
+
+// Commands with colons
+<<hide Collision:GermOnPorch>>
+
+// command with replacements
+<<show {1}>>
+
+// command with variable replacement
+<<declare $replacement = "1">>
+<<show {$replacement}>>
+
+// command with format trickery
+// this is to test #362 doesn't come back
+// this USED to boil down to an empty string
+<<{0}{""}>>
+
+// command with variable replacement and format trickery
+// essentially combining the previous two
+// this previously would have become <<2 2>>. now is <<2 {0}>> which is weird but allowed
+<<set $replacement = "{0}">>
+<<{2} {$replacement}>>
+
+// command with variable replacement in the middle of another element
+// another weird but allowed situation
+<<set $replacement = "ular old co">>
+<<reg{$replacement}mmand>>
+===
+
+-----------------------------------------------------------------------------|||
+
+(dialogue
+  (node
+    (title_header
+      (identifier))
+    (comment)
+    (body
+      (command_statement
+        (identifier)
+        (identifier)
+        (command_text))
+      (comment)
+      (command_statement
+        (identifier))
+      (command_statement
+        (identifier))
+      (command_statement
+        (identifier))
+      (command_statement
+        (identifier))
+      (command_statement
+        (identifier))
+      (command_statement
+        (identifier))
+      (command_statement
+        (identifier))
+      (command_statement
+        (identifier))
+      (command_statement
+        (identifier))
+      (command_statement
+        (identifier))
+      (command_statement
+        (identifier))
+      (command_statement
+        (identifier))
+      (command_statement
+        (identifier))
+      (command_statement
+        (identifier))
+      (command_statement
+        (identifier))
+      (comment)
+      (command_statement
+        (identifier))
+      (comment)
+      (comment)
+      (comment)
+      (command_statement
+        (identifier)
+        (identifier)
+        (command_text))
+      (comment)
+      (command_statement
+        (identifier)
+        (number))
+      (comment)
+      (declare_statement
+        (variable
+          (identifier))
+        (string))
+      (command_statement
+        (identifier)
+        (variable
+          (identifier)))
+      (comment)
+      (comment)
+      (comment)
+      (command_statement
+        (number)
+        (string))
+      (comment)
+      (comment)
+      (comment)
+      (set_statement
+        (variable
+          (identifier))
+        (string))
+      (command_statement
+        (number)
+        (variable
+          (identifier)))
+      (comment)
+      (comment)
+      (set_statement
+        (variable
+          (identifier))
+        (string))
+      (command_statement
+        (identifier)
+        (variable
+          (identifier))
+        (identifier)))))
+
+=============================================================================|||
+Detours
+=============================================================================|||
+
+title: Start
+---
+Line 1
+<<detour Node2>>
+Line 5
+<<jump VisitCountTest>>
+===
+title: Node2
+---
+Line 2
+<<detour {"Node3"}>>
+Line 4
+===
+title: Node3
+---
+Line 3
+
+// Early return
+<<return>>
+
+Error: should not be seen
+===
+title: VisitCountTest
+---
+// 0 - this is the first time we have run this node
+VisitCountTest: {visited_count("VisitCountTest")} 
+<<detour VisitCountTest2>>
+Error: We should not see this
+===
+title: VisitCountTest2
+---
+// still 0 - we detoured into this node but have not yet 'left' VisitCountTest
+VisitCountTest: {visited_count("VisitCountTest")} 
+
+<<jump VisitCountTest3>>
+===
+title: VisitCountTest3
+---
+// now both 1 - we unwound the call stack when we jumped out of VisitCountTest2, thus exiting both nodes
+VisitCountTest: {visited_count("VisitCountTest")} 
+VisitCountTest2: {visited_count("VisitCountTest2")} 
+===
+
+-----------------------------------------------------------------------------|||
+
+(dialogue
+  (node
+    (title_header
+      (identifier))
+    (body
+      (line_statement
+        (text))
+      (jump_statement
+        (identifier))
+      (line_statement
+        (text))
+      (jump_statement
+        (identifier))))
+  (node
+    (title_header
+      (identifier))
+    (body
+      (line_statement
+        (text))
+      (jump_statement
+        (string))
+      (line_statement
+        (text))))
+  (node
+    (title_header
+      (identifier))
+    (body
+      (line_statement
+        (text))
+      (comment)
+      (return_statement)
+      (line_statement
+        (text))))
+  (node
+    (title_header
+      (identifier))
+    (comment)
+    (body
+      (line_statement
+        (text)
+        (function_call
+          (identifier)
+          (arguments
+            (string))))
+      (jump_statement
+        (identifier))
+      (line_statement
+        (text))))
+  (node
+    (title_header
+      (identifier))
+    (comment)
+    (body
+      (line_statement
+        (text)
+        (function_call
+          (identifier)
+          (arguments
+            (string))))
+      (jump_statement
+        (identifier))))
+  (node
+    (title_header
+      (identifier))
+    (comment)
+    (body
+      (line_statement
+        (text)
+        (function_call
+          (identifier)
+          (arguments
+            (string))))
+      (line_statement
+        (text)
+        (function_call
+          (identifier)
+          (arguments
+            (string)))))))
+
+=============================================================================|||
 Enums
 =============================================================================|||
 
@@ -283,6 +580,55 @@ title: Start
           (block
             (line_statement
               (text))))))))
+
+=============================================================================|||
+Functions
+=============================================================================|||
+
+title: Start
+---
+// Function tests
+
+// "add_three_operands" is a function that adds three operands together
+
+{add_three_operands(1, 2, 4*1)}
+
+// function calls as parameters
+
+{add_three_operands(1, 2, add_three_operands(1,2,3))}
+===
+
+-----------------------------------------------------------------------------|||
+
+(dialogue
+  (node
+    (title_header
+      (identifier))
+    (comment)
+    (comment)
+    (body
+      (line_statement
+        (function_call
+          (identifier)
+          (arguments
+            (number)
+            (number)
+            (binary_expression
+              (number)
+              (number)))))
+      (comment)
+      (line_statement
+        (function_call
+          (identifier)
+          (arguments
+            (number)
+            (number)
+            (function_call
+              (identifier)
+              (arguments
+                (number)
+                (number)
+                (number)))))))))
 
 =============================================================================|||
 IfStatements
@@ -826,3 +1172,99 @@ Line 4 // line will always run
         (comment))
       (line_statement
         (text)))))
+
+=============================================================================|||
+Types
+=============================================================================|||
+
+title: Start
+---
+// Testing types
+
+// string equality
+{"test" == "test"}
+{"test" eq "test"}
+
+// string case sensitivity
+{"hi" != "HI"}
+{"hi" neq "HI"}
+
+// gt test
+{3 > 2}
+{3 gt 2}
+
+// lt test
+{1 < 2}
+{1 lt 2}
+
+// lte test
+{2 <= 2}
+{2 lte 2}
+
+// gte test
+{2 >= 2}
+{2 gte 2}
+===
+
+-----------------------------------------------------------------------------|||
+
+(dialogue
+  (node
+    (title_header
+      (identifier))
+    (comment)
+    (comment)
+    (body
+      (line_statement
+        (binary_expression
+          (string)
+          (string)))
+      (line_statement
+        (binary_expression
+          (string)
+          (string)))
+      (comment)
+      (line_statement
+        (binary_expression
+          (string)
+          (string)))
+      (line_statement
+        (binary_expression
+          (string)
+          (string)))
+      (comment)
+      (line_statement
+        (binary_expression
+          (number)
+          (number)))
+      (line_statement
+        (binary_expression
+          (number)
+          (number)))
+      (comment)
+      (line_statement
+        (binary_expression
+          (number)
+          (number)))
+      (line_statement
+        (binary_expression
+          (number)
+          (number)))
+      (comment)
+      (line_statement
+        (binary_expression
+          (number)
+          (number)))
+      (line_statement
+        (binary_expression
+          (number)
+          (number)))
+      (comment)
+      (line_statement
+        (binary_expression
+          (number)
+          (number)))
+      (line_statement
+        (binary_expression
+          (number)
+          (number))))))
