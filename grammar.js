@@ -334,7 +334,7 @@ module.exports = grammar({
     _hashtag_text: _ => token(/[^\s#<>{}\r\n]+/),
 
     // Text
-    text: _ => token(/[^ \t#<>{}\r\n\\][^#<>{}\r\n\\]*/),
+    text: _ => token(prec(-1, /[^ \t#<>{}\r\n\\][^#<>{}\r\n\\]*/)),
 
     // Newline: required for scanner dedent detection
     _newline: _ => token(seq(optional('\r'), '\n')),

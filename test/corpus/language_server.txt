@@ -613,13 +613,11 @@ title: CodeCompletionTests
               (variable
                 (identifier))
               (unary_expression
-                (boolean))))))
-      (line_statement
-        (text))
-      (line_statement
-        (text))
-      (line_statement
-        (text))
+                (boolean))))))))
+  (node
+    (title_header
+      (identifier))
+    (body
       (comment)
       (jump_statement
         (identifier))))

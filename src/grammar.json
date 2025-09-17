@@ -1887,8 +1887,12 @@
     "text": {
       "type": "TOKEN",
       "content": {
-        "type": "PATTERN",
-        "value": "[^ \\t#<>{}\\r\\n\\\\][^#<>{}\\r\\n\\\\]*"
+        "type": "PREC",
+        "value": -1,
+        "content": {
+          "type": "PATTERN",
+          "value": "[^ \\t#<>{}\\r\\n\\\\][^#<>{}\\r\\n\\\\]*"
+        }
       }
     },
     "_newline": {
