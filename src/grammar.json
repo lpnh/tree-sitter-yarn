@@ -329,17 +329,20 @@
       ]
     },
     "_line_formatted_text": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "text"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "_inline_expression"
-        }
-      ]
+      "type": "REPEAT1",
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "text"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_inline_expression"
+          }
+        ]
+      }
     },
     "_inline_expression": {
       "type": "SEQ",

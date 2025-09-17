@@ -92,7 +92,7 @@ module.exports = grammar({
         $._newline,
       ),
 
-    _line_formatted_text: $ => choice($.text, $._inline_expression),
+    _line_formatted_text: $ => repeat1(choice($.text, $._inline_expression)),
 
     _inline_expression: $ => seq('{', $._expression, '}'),
 
