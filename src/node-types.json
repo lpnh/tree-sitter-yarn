@@ -334,6 +334,10 @@
           "named": true
         },
         {
+          "type": "comment",
+          "named": true
+        },
+        {
           "type": "declare_statement",
           "named": true
         },

@@ -78,8 +78,8 @@ title: Start
   (node
     (title_header
       (identifier))
-    (comment)
     (body
+      (comment)
       (command_statement
         (identifier)
         (identifier)
@@ -252,8 +252,8 @@ VisitCountTest2: {visited_count("VisitCountTest2")}
   (node
     (title_header
       (identifier))
-    (comment)
     (body
+      (comment)
       (line_statement
         (text)
         (function_call
@@ -267,8 +267,8 @@ VisitCountTest2: {visited_count("VisitCountTest2")}
   (node
     (title_header
       (identifier))
-    (comment)
     (body
+      (comment)
       (line_statement
         (text)
         (function_call
@@ -280,8 +280,8 @@ VisitCountTest2: {visited_count("VisitCountTest2")}
   (node
     (title_header
       (identifier))
-    (comment)
     (body
+      (comment)
       (line_statement
         (text)
         (function_call
@@ -393,9 +393,9 @@ title: Start
   (node
     (title_header
       (identifier))
-    (comment)
-    (comment)
     (body
+      (comment)
+      (comment)
       (enum_statement
         (identifier)
         (enum_case_statement
@@ -604,9 +604,9 @@ title: Start
   (node
     (title_header
       (identifier))
-    (comment)
-    (comment)
     (body
+      (comment)
+      (comment)
       (line_statement
         (function_call
           (identifier)
@@ -810,9 +810,9 @@ title: Destination
   (node
     (title_header
       (identifier))
-    (comment)
-    (comment)
     (body
+      (comment)
+      (comment)
       (command_statement
         (identifier)))))
 
@@ -822,9 +822,10 @@ Jumps
 
 title: Start
 ---
-
-
-
+Start
+// Jump to a node name
+<<jump NodeNameDestination>>
+Error! This line should not be seen.
 ===
 title: NodeNameDestination
 ---
@@ -834,9 +835,10 @@ NodeNameDestination
 ===
 title: NodeNameConstantExpression
 ---
-
-
-
+NodeNameExpression
+// Jump to a node based on a non-constant expression
+<<declare $myNodeName = "NodeNameVariableExpression">>
+<<jump {$myNodeName}>>
 ===
 title: NodeNameVariableExpression
 ---
@@ -848,7 +850,15 @@ NodeNameVariableExpression
 (dialogue
   (node
     (title_header
-      (identifier)))
+      (identifier))
+    (body
+      (line_statement
+        (text))
+      (comment)
+      (jump_statement
+        (identifier))
+      (line_statement
+        (text))))
   (node
     (title_header
       (identifier))
@@ -860,7 +870,18 @@ NodeNameVariableExpression
         (string))))
   (node
     (title_header
-      (identifier)))
+      (identifier))
+    (body
+      (line_statement
+        (text))
+      (comment)
+      (declare_statement
+        (variable
+          (identifier))
+        (string))
+      (jump_statement
+        (variable
+          (identifier)))))
   (node
     (title_header
       (identifier))
@@ -923,8 +944,8 @@ title: BakerSeesPlayer
   (node
     (title_header
       (identifier))
-    (comment)
     (body
+      (comment)
       (declare_statement
         (variable
           (identifier))
@@ -1212,9 +1233,9 @@ title: Start
   (node
     (title_header
       (identifier))
-    (comment)
-    (comment)
     (body
+      (comment)
+      (comment)
       (line_statement
         (binary_expression
           (string)

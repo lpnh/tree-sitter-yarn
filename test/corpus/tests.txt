@@ -19,8 +19,8 @@ title: Start
   (node
     (title_header
       (identifier))
-    (comment)
     (body
+      (comment)
       (declare_statement
         (variable
           (identifier))
@@ -175,8 +175,8 @@ All done with the shortcut options!
   (node
     (title_header
       (identifier))
-    (comment)
     (body
+      (comment)
       (line_statement
         (text))
       (if_statement
@@ -606,8 +606,8 @@ These options should be shuffled:
   (node
     (title_header
       (identifier))
-    (comment)
     (body
+      (comment)
       (line_statement
         (text))
       (command_statement

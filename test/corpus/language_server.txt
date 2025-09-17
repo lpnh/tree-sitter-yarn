@@ -184,8 +184,8 @@ Guard: None shall pass this point!
           (variable
             (identifier))
           (boolean))))
-    (comment)
     (body
+      (comment)
       (line_statement
         (text))
       (line_statement
@@ -201,8 +201,8 @@ Guard: None shall pass this point!
           (variable
             (identifier))
           (boolean))))
-    (comment)
     (body
+      (comment)
       (line_statement
         (text))
       (line_statement
@@ -424,8 +424,8 @@ title: FunctionCalls
   (node
     (title_header
       (identifier))
-    (comment)
     (body
+      (comment)
       (if_statement
         (binary_expression
           (function_call
@@ -626,8 +626,8 @@ title: CodeCompletionTests
   (node
     (title_header
       (identifier))
-    (comment)
     (body
+      (comment)
       (command_statement
         (identifier)))))
 

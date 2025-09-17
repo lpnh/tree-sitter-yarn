@@ -29,9 +29,11 @@ module.exports = grammar({
       seq(
         repeat1(choice($.title_header, $.when_header, $.header)),
         '---',
-        alias(repeat($._statement), $.body),
+        $.body,
         '===',
       ),
+
+    body: $ => seq(repeat($.comment), repeat1($._statement)),
 
     // Headers
     title_header: $ =>
