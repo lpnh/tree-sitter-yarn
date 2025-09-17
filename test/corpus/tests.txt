@@ -705,6 +705,125 @@ These options should be shuffled:
         (text)))))
 
 =============================================================================|||
+TaggedLines
+=============================================================================|||
+
+title: Start
+---
+Test line 1 #line:test1
+Test line 2 #line:test2
+<<jump Destination>>
+===
+title: Destination
+---
+Test line 3 #line:test3
+Test line 4 #line:test4
+===
+
+-----------------------------------------------------------------------------|||
+
+(dialogue
+  (node
+    (title_header
+      (identifier))
+    (body
+      (line_statement
+        (text)
+        (hashtag))
+      (line_statement
+        (text)
+        (hashtag))
+      (jump_statement
+        (identifier))))
+  (node
+    (title_header
+      (identifier))
+    (body
+      (line_statement
+        (text)
+        (hashtag))
+      (line_statement
+        (text)
+        (hashtag)))))
+
+=============================================================================|||
+Test
+=============================================================================|||
+
+title: TestNode
+colorID: 3
+---
+This is a test node!
+
+===
+
+title: AnotherTestNode
+position: 2,4
+
+---
+This is a second test node!
+
+<<if 1 == 1>>
+This still works!
+<<set $x to 23>>
+<<endif>>
+
+<<declare $x = 0>>
+===
+
+title: ThirdNode
+tags: multiple tags!
+---
+<<stop>>
+===
+
+-----------------------------------------------------------------------------|||
+
+(dialogue
+  (node
+    (title_header
+      (identifier))
+    (header
+      (identifier)
+      (header_value))
+    (body
+      (line_statement
+        (text))))
+  (node
+    (title_header
+      (identifier))
+    (header
+      (identifier)
+      (header_value))
+    (body
+      (line_statement
+        (text))
+      (if_statement
+        (binary_expression
+          (number)
+          (number))
+        (block
+          (line_statement
+            (text))
+          (set_statement
+            (variable
+              (identifier))
+            (number))))
+      (declare_statement
+        (variable
+          (identifier))
+        (number))))
+  (node
+    (title_header
+      (identifier))
+    (header
+      (identifier)
+      (header_value))
+    (body
+      (command_statement
+        (identifier)))))
+
+=============================================================================|||
 Sally
 =============================================================================|||
 
