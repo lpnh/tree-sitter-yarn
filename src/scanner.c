@@ -152,19 +152,6 @@ static bool scan_indent_dedent(Scanner *scanner, TSLexer *lexer,
     return false; // Nothing to see here, move along
   }
 
-  // Quick check for comment-only lines
-  // Comments don't participate in indentation structure
-  if (lexer->lookahead == '/') {
-    TSLexer saved_lexer = *lexer; // Save our position
-    advance(lexer);
-    if (lexer->lookahead == '/') {
-      // It's a comment line, restore position and bail out
-      *lexer = saved_lexer; // Rollback
-      return false;         // Comments are not our department
-    }
-    *lexer = saved_lexer; // False alarm, restore and carry on
-  }
-
   // Now the real work begins: comparing indentation levels
   uint32_t current_indent = peek_indent(scanner);
 

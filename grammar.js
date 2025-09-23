@@ -10,11 +10,11 @@
 module.exports = grammar({
   name: 'yarn',
 
-  conflicts: $ => [[$.else_clause], [$.else_if_clause]],
+  conflicts: $ => [[$.else_clause], [$.else_if_clause], [$.once_statement]],
 
   externals: $ => [$._indent, $._dedent],
 
-  extras: $ => [/\s/, $.comment],
+  extras: $ => [$._whitespace, $._eol, $.comment],
 
   word: $ => $.identifier,
 
@@ -28,16 +28,15 @@ module.exports = grammar({
     node: $ =>
       seq(
         repeat1(choice($.title_header, $.when_header, $.header)),
-        '---',
+        token('---'),
         $.body,
-        '===',
+        token('==='),
       ),
 
-    body: $ => seq(repeat($.comment), repeat1($._statement)),
+    body: $ => repeat1(choice($._statement, $._eol)),
 
     // Headers
-    title_header: $ =>
-      seq('title', ':', field('title', $.identifier), $._newline),
+    title_header: $ => seq('title', ':', field('title', $.identifier)),
 
     when_header: $ => seq('when', ':', $.header_when_expression),
 
@@ -54,7 +53,7 @@ module.exports = grammar({
           field('header_key', $.identifier),
           ':',
           optional(field('header_value', $.header_value)),
-          $._newline,
+          $._eol,
         ),
       ),
 
@@ -67,6 +66,7 @@ module.exports = grammar({
         $.shortcut_option_statement,
         $.line_group_statement,
         $._command_like_statements,
+        seq($._indent, repeat($._statement), $._dedent),
       ),
 
     _command_like_statements: $ =>
@@ -82,7 +82,6 @@ module.exports = grammar({
           $.once_statement,
           $.command_statement,
         ),
-        $._newline,
       ),
 
     // Line statement
@@ -91,7 +90,7 @@ module.exports = grammar({
         $._line_formatted_text,
         optional($.line_condition),
         repeat($.hashtag),
-        $._newline,
+        $._eol,
       ),
 
     _line_formatted_text: $ => repeat1(choice($.text, $._inline_expression)),
@@ -107,10 +106,19 @@ module.exports = grammar({
     // If statement
     if_statement: $ =>
       seq(
-        seq('<<', 'if', field('condition', $._expression), '>>'),
-        field('consequence', alias(repeat($._statement), $.block)),
+        seq(
+          '<<',
+          'if',
+          field('condition', $._expression),
+          '>>',
+          optional($._whitespace_with_eol),
+        ),
+        field(
+          'consequence',
+          alias(repeat(choice($._statement, $._eol)), $.block),
+        ),
         optional(field('alternative', choice($.else_if_clause, $.else_clause))),
-        seq('<<', 'endif', '>>'),
+        seq('<<', 'endif', '>>', optional($._whitespace_with_eol)),
       ),
 
     else_if_clause: $ =>
@@ -216,33 +224,40 @@ module.exports = grammar({
           optional(field('condition', seq('if', $._expression))),
           '>>',
         ),
-        alias(repeat($._statement), $.once_primary_clause),
+        alias(repeat(choice($._statement, $._eol)), $.once_primary_clause),
         optional(
           field(
             'alternative',
             seq(
               '<<else>>',
-              alias(repeat($._statement), $.once_alternate_clause),
+              alias(
+                repeat(choice($._statement, $._eol)),
+                $.once_alternate_clause,
+              ),
             ),
           ),
         ),
+        optional($._eol),
         '<<endonce>>',
       ),
 
     // Shortcut option statement
-    shortcut_option_statement: $ => prec.right(seq(repeat1($.shortcut_option))),
+    shortcut_option_statement: $ => prec.right(repeat1($.shortcut_option)),
 
     shortcut_option: $ =>
-      seq(
-        '->',
-        alias($.line_statement, $.option_line),
-        optional(field('body', $.option_body)),
+      prec.right(
+        seq(
+          '->',
+          alias($.line_statement, $.option_line),
+          optional(seq($._indent, repeat(choice($._statement)), $._dedent)),
+        ),
       ),
 
-    option_body: $ => seq($._indent, repeat($._statement), $._dedent),
-
     // Line group statement
-    line_group_statement: $ => prec.right(repeat1($.line_group_item)),
+    line_group_statement: $ =>
+      prec.right(
+        repeat1(seq($.line_group_item, repeat(seq($.comment, $._eol)))),
+      ),
 
     line_group_item: $ => seq('=>', $.line_statement),
 
@@ -336,7 +351,13 @@ module.exports = grammar({
     // Text
     text: _ => token(prec(-1, /[^ \t#<>{}\r\n\\][^#<>{}\r\n\\]*/)),
 
-    // Newline: required for scanner dedent detection
-    _newline: _ => token(seq(optional('\r'), '\n')),
+    // Repeated _whitespace (spaces and tabs)
+    _whitespace: _ => token(/[ \t]+/),
+
+    // End-of-line sequence (CRLF or LF)
+    _eol: _ => token(seq(optional('\r'), '\n')),
+
+    // Optional whitespace followed by end-of-line
+    _whitespace_with_eol: $ => token(seq(/[ \t]*/, seq(optional('\r'), '\n'))),
   },
 });

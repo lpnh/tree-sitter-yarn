@@ -657,9 +657,11 @@ title: Start
         (function_call
           (identifier)
           (arguments
-            (number))))
+            (number)))
+        (block))
       (if_statement
         (function_call
           (identifier)
           (arguments
-            (number)))))))
+            (number)))
+        (block)))))

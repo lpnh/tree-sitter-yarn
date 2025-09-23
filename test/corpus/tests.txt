@@ -222,25 +222,22 @@ All done with the shortcut options!
             (text)
             (line_condition
               (boolean)))
-          (option_body
             (line_statement
-              (text))))
+              (text)))
         (shortcut_option
           (option_line
             (text))
-          (option_body
             (line_statement
               (text))
             (shortcut_option_statement
               (shortcut_option
                 (option_line
                   (text))
-                (option_body
                   (line_statement
-                    (text))))
+                    (text)))
               (shortcut_option
                 (option_line
-                  (text))))))
+                  (text)))))
         (shortcut_option
           (option_line
             (text))))
@@ -312,11 +309,10 @@ A: HAHAHA
         (shortcut_option
           (option_line
             (text))
-          (option_body
             (line_statement
               (text))
             (line_statement
-              (text))))
+              (text)))
         (shortcut_option
           (option_line
             (text))))
@@ -328,15 +324,13 @@ A: HAHAHA
         (shortcut_option
           (option_line
             (text))
-          (option_body
             (jump_statement
-              (identifier))))
+              (identifier)))
         (shortcut_option
           (option_line
             (text))
-          (option_body
             (jump_statement
-              (identifier)))))))
+              (identifier))))))
   (node
     (title_header
       (identifier))
@@ -520,15 +514,13 @@ Node C
         (shortcut_option
           (option_line
             (text))
-          (option_body
             (jump_statement
-              (identifier))))
+              (identifier)))
         (shortcut_option
           (option_line
             (text))
-          (option_body
             (jump_statement
-              (identifier)))))))
+              (identifier))))))
   (node
     (title_header
       (identifier))
@@ -646,7 +638,6 @@ These options should be shuffled:
         (shortcut_option
           (option_line
             (text))
-          (option_body
             (command_statement
               (identifier))
             (shortcut_option_statement
@@ -661,7 +652,7 @@ These options should be shuffled:
                   (text)))
               (shortcut_option
                 (option_line
-                  (text))))))
+                  (text)))))
         (shortcut_option
           (option_line
             (text))))

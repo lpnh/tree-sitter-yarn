@@ -264,7 +264,7 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "call_statement",
@@ -323,7 +323,7 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "call_statement",
@@ -331,10 +331,6 @@
         },
         {
           "type": "command_statement",
-          "named": true
-        },
-        {
-          "type": "comment",
           "named": true
         },
         {
@@ -1126,6 +1122,10 @@
       "required": true,
       "types": [
         {
+          "type": "comment",
+          "named": true
+        },
+        {
           "type": "line_group_item",
           "named": true
         }
@@ -1254,7 +1254,7 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "call_statement",
@@ -1313,7 +1313,7 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "call_statement",
@@ -1445,65 +1445,6 @@
       "types": [
         {
           "type": "once_primary_clause",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "option_body",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "call_statement",
-          "named": true
-        },
-        {
-          "type": "command_statement",
-          "named": true
-        },
-        {
-          "type": "declare_statement",
-          "named": true
-        },
-        {
-          "type": "enum_statement",
-          "named": true
-        },
-        {
-          "type": "if_statement",
-          "named": true
-        },
-        {
-          "type": "jump_statement",
-          "named": true
-        },
-        {
-          "type": "line_group_statement",
-          "named": true
-        },
-        {
-          "type": "line_statement",
-          "named": true
-        },
-        {
-          "type": "once_statement",
-          "named": true
-        },
-        {
-          "type": "return_statement",
-          "named": true
-        },
-        {
-          "type": "set_statement",
-          "named": true
-        },
-        {
-          "type": "shortcut_option_statement",
           "named": true
         }
       ]
@@ -1731,24 +1672,61 @@
   {
     "type": "shortcut_option",
     "named": true,
-    "fields": {
-      "body": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "option_body",
-            "named": true
-          }
-        ]
-      }
-    },
+    "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
         {
+          "type": "call_statement",
+          "named": true
+        },
+        {
+          "type": "command_statement",
+          "named": true
+        },
+        {
+          "type": "declare_statement",
+          "named": true
+        },
+        {
+          "type": "enum_statement",
+          "named": true
+        },
+        {
+          "type": "if_statement",
+          "named": true
+        },
+        {
+          "type": "jump_statement",
+          "named": true
+        },
+        {
+          "type": "line_group_statement",
+          "named": true
+        },
+        {
+          "type": "line_statement",
+          "named": true
+        },
+        {
+          "type": "once_statement",
+          "named": true
+        },
+        {
           "type": "option_line",
+          "named": true
+        },
+        {
+          "type": "return_statement",
+          "named": true
+        },
+        {
+          "type": "set_statement",
+          "named": true
+        },
+        {
+          "type": "shortcut_option_statement",
           "named": true
         }
       ]
