@@ -22,18 +22,18 @@ module.exports = grammar({
     dialogue: $ =>
       seq(repeat(alias($.hashtag, $.file_hashtag)), repeat1($.node)),
 
-    comment: _ => token(seq('//', /[^\r\n]*/)),
+    comment: _ => seq('//', /[^\r\n]*/),
 
     // Node
     node: $ =>
       seq(
         repeat1(choice($.title_header, $.when_header, $.header)),
-        token('---'),
+        '---',
         $.body,
-        token('==='),
+        '===',
       ),
 
-    body: $ => repeat1(choice($._statement, $._eol)),
+    body: $ => seq(repeat1($._eol), repeat($._statement)),
 
     // Headers
     title_header: $ => seq('title', ':', field('title', $.identifier)),
@@ -249,15 +249,12 @@ module.exports = grammar({
         seq(
           '->',
           alias($.line_statement, $.option_line),
-          optional(seq($._indent, repeat(choice($._statement)), $._dedent)),
+          optional(seq($._indent, repeat($._statement), $._dedent)),
         ),
       ),
 
     // Line group statement
-    line_group_statement: $ =>
-      prec.right(
-        repeat1(seq($.line_group_item, repeat(seq($.comment, $._eol)))),
-      ),
+    line_group_statement: $ => prec.right(repeat1($.line_group_item)),
 
     line_group_item: $ => seq('=>', $.line_statement),
 
@@ -358,6 +355,6 @@ module.exports = grammar({
     _eol: _ => token(seq(optional('\r'), '\n')),
 
     // Optional whitespace followed by end-of-line
-    _whitespace_with_eol: $ => token(seq(/[ \t]*/, seq(optional('\r'), '\n'))),
+    _whitespace_with_eol: _ => token(seq(/[ \t]*/, seq(optional('\r'), '\n'))),
   },
 });

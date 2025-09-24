@@ -456,6 +456,12 @@
     }
   },
   {
+    "type": "comment",
+    "named": true,
+    "extra": true,
+    "fields": {}
+  },
+  {
     "type": "declare_statement",
     "named": true,
     "fields": {
@@ -1121,10 +1127,6 @@
       "multiple": true,
       "required": true,
       "types": [
-        {
-          "type": "comment",
-          "named": true
-        },
         {
           "type": "line_group_item",
           "named": true
@@ -1944,6 +1946,10 @@
     "named": false
   },
   {
+    "type": "//",
+    "named": false
+  },
+  {
     "type": "/=",
     "named": false
   },
@@ -2034,11 +2040,6 @@
   {
     "type": "command_text",
     "named": true
-  },
-  {
-    "type": "comment",
-    "named": true,
-    "extra": true
   },
   {
     "type": "declare",

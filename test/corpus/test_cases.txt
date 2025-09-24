@@ -1365,10 +1365,9 @@ Bea: line text
           (option_line
             (text))
           (line_statement
-            (text))))
-      (comment)
-      (comment)
-      (shortcut_option_statement
+            (text)))
+        (comment)
+        (comment)
         (shortcut_option
           (option_line
             (text)
@@ -1378,9 +1377,8 @@ Bea: line text
         (shortcut_option
           (option_line
             (text)
-            (hashtag))))
-      (comment)
-      (shortcut_option_statement
+            (hashtag)))
+        (comment)
         (shortcut_option
           (option_line
             (text)

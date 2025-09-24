@@ -28,20 +28,17 @@
       ]
     },
     "comment": {
-      "type": "TOKEN",
-      "content": {
-        "type": "SEQ",
-        "members": [
-          {
-            "type": "STRING",
-            "value": "//"
-          },
-          {
-            "type": "PATTERN",
-            "value": "[^\\r\\n]*"
-          }
-        ]
-      }
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "//"
+        },
+        {
+          "type": "PATTERN",
+          "value": "[^\\r\\n]*"
+        }
+      ]
     },
     "node": {
       "type": "SEQ",
@@ -67,40 +64,37 @@
           }
         },
         {
-          "type": "TOKEN",
-          "content": {
-            "type": "STRING",
-            "value": "---"
-          }
+          "type": "STRING",
+          "value": "---"
         },
         {
           "type": "SYMBOL",
           "name": "body"
         },
         {
-          "type": "TOKEN",
-          "content": {
-            "type": "STRING",
-            "value": "==="
-          }
+          "type": "STRING",
+          "value": "==="
         }
       ]
     },
     "body": {
-      "type": "REPEAT1",
-      "content": {
-        "type": "CHOICE",
-        "members": [
-          {
-            "type": "SYMBOL",
-            "name": "_statement"
-          },
-          {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "REPEAT1",
+          "content": {
             "type": "SYMBOL",
             "name": "_eol"
           }
-        ]
-      }
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_statement"
+          }
+        }
+      ]
     },
     "title_header": {
       "type": "SEQ",
@@ -1267,13 +1261,8 @@
                   {
                     "type": "REPEAT",
                     "content": {
-                      "type": "CHOICE",
-                      "members": [
-                        {
-                          "type": "SYMBOL",
-                          "name": "_statement"
-                        }
-                      ]
+                      "type": "SYMBOL",
+                      "name": "_statement"
                     }
                   },
                   {
@@ -1296,29 +1285,8 @@
       "content": {
         "type": "REPEAT1",
         "content": {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "line_group_item"
-            },
-            {
-              "type": "REPEAT",
-              "content": {
-                "type": "SEQ",
-                "members": [
-                  {
-                    "type": "SYMBOL",
-                    "name": "comment"
-                  },
-                  {
-                    "type": "SYMBOL",
-                    "name": "_eol"
-                  }
-                ]
-              }
-            }
-          ]
+          "type": "SYMBOL",
+          "name": "line_group_item"
         }
       }
     },
