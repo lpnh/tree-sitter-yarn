@@ -12,7 +12,7 @@ module.exports = grammar({
 
   conflicts: $ => [[$.else_clause], [$.else_if_clause], [$.once_statement]],
 
-  externals: $ => [$._indent, $._dedent],
+  externals: $ => [$._indent, $._dedent, $._blankline],
 
   extras: $ => [$._whitespace, $._eol, $.comment],
 
@@ -242,7 +242,8 @@ module.exports = grammar({
       ),
 
     // Shortcut option statement
-    shortcut_option_statement: $ => prec.right(repeat1($.shortcut_option)),
+    shortcut_option_statement: $ =>
+      prec.right(seq(repeat1($.shortcut_option), optional($._blankline))),
 
     shortcut_option: $ =>
       prec.right(
@@ -254,7 +255,8 @@ module.exports = grammar({
       ),
 
     // Line group statement
-    line_group_statement: $ => prec.right(repeat1($.line_group_item)),
+    line_group_statement: $ =>
+      prec.right(seq(repeat1($.line_group_item), optional($._blankline))),
 
     line_group_item: $ => seq('=>', $.line_statement),
 

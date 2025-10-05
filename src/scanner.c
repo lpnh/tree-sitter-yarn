@@ -13,17 +13,19 @@
 #include <string.h>
 
 /*
- * We take care of two things here:
+ * We take care of three things here:
  *
  * 1. INDENT: Whitespace that pushes the text rightward into the void
  * 2. DEDENT: Whitespace that yanks the text back from said void
+ * 3. BLANKLINE: The void itself
  *
- * These are the only two tokens this scanner produces. Everything else is
+ * These are the three tokens this scanner produces. Everything else is
  * someone else's problem (and by that I mean us, but in a different file).
  */
 enum TokenType {
   INDENT,
   DEDENT,
+  BLANKLINE,
 };
 
 /*
@@ -147,15 +149,32 @@ static bool scan_indent_dedent(Scanner *scanner, TSLexer *lexer,
     skip(lexer); // Move past this whitespace character
   }
 
-  // Skip empty lines and lines with only whitespace
+  // Now the real work begins: comparing indentation levels
+  uint32_t current_indent = peek_indent(scanner);
+
+  // DEDENTs have the priority here
+  // So, before anything else, let's check if we're indenting less than before
+  if (indent_level < current_indent && valid_symbols[DEDENT]) {
+    // Pop indent levels until we find one that matches our current indentation
+    while (scanner->indent_count > 0 && peek_indent(scanner) > indent_level) {
+      pop_indent(scanner);     // Close this nesting level
+      scanner->dedent_trail++; // Add a DEDENT to our backlog
+    }
+
+    // Got DEDENTs in our... backlog...? Wait, haven't I seen that already?
+    if (scanner->dedent_trail > 0) {
+      scanner->dedent_trail--; // Take one DEDENT from the trail (déjà vu)
+      lexer->result_symbol = DEDENT;
+      return true; // Emit DEDENT on blank lines as well, whatever
+    }
+  }
+
+  // Let's take this opportunity to skip as many empty lines as we can.. he he
   if (is_newline(lexer->lookahead) || lexer->eof(lexer)) {
     return false; // Nothing to see here, move along
   }
 
-  // Now the real work begins: comparing indentation levels
-  uint32_t current_indent = peek_indent(scanner);
-
-  // Case 1: We're indenting more than before (moving forward)
+  // Finally, we check if we're indenting more than before
   if (indent_level > current_indent && valid_symbols[INDENT]) {
     // Push this new indentation level onto our stack for future reference
     push_indent(scanner, indent_level);
@@ -163,24 +182,7 @@ static bool scan_indent_dedent(Scanner *scanner, TSLexer *lexer,
     return true;                   // Forward we go, into the whitespace unknown
   }
 
-  // Case 2: We're indenting less than before (going back to our roots)
-  if (indent_level < current_indent && valid_symbols[DEDENT]) {
-    // Pop indent levels until we find one that matches our current indentation
-    // or until we run out of levels, which probably means some wonky formatting
-    while (scanner->indent_count > 0 && peek_indent(scanner) > indent_level) {
-      pop_indent(scanner);     // Close this nesting level
-      scanner->dedent_trail++; // Add a DEDENT to our backlog
-    }
-
-    // Got DEDENTs in our backlog? Let's process them
-    if (scanner->dedent_trail > 0) {
-      scanner->dedent_trail--; // Take one DEDENT from the trail (déjà vu)
-      lexer->result_symbol = DEDENT;
-      return true; // One DEDENT served, fresh from the queue
-    }
-  }
-
-  // Case 3: Indentation level is the same as before
+  // Indentation level is the same as before
   return false; // ¯\_(ツ)_/¯
 }
 
@@ -325,12 +327,13 @@ void tree_sitter_yarn_external_scanner_deserialize(void *payload,
  */
 bool tree_sitter_yarn_external_scanner_scan(void *payload, TSLexer *lexer,
                                             const bool *valid_symbols) {
-  // Where's my scanner? There's my scanner
+  // Where's my scanner? There's my scanner!
   Scanner *scanner = (Scanner *)payload;
   if (!scanner)
     return false; // Can't work without my scanner
 
   // When we reach EOF, we need to close any remaining open indentation levels
+  // Maybe we should have looked for a `---` token before that... just saying...
   if (lexer->eof(lexer)) {
     // Still got DEDENTs in our backlog? Process them first
     if (scanner->dedent_trail > 0 && valid_symbols[DEDENT]) {
@@ -349,7 +352,14 @@ bool tree_sitter_yarn_external_scanner_scan(void *payload, TSLexer *lexer,
     return false; // EOF reached, all indentation levels closed, life's good
   }
 
-  // Normal case: try to handle indent/dedent tokens
+  // Ok.. It's happening... First things first, let's see if we find a blankline
+  if (valid_symbols[BLANKLINE] && lexer->get_column(lexer) == 0 &&
+      is_newline(lexer->lookahead)) {
+    lexer->result_symbol = BLANKLINE; // AHA!
+    return true;                      // That was easy
+  }
+
+  // Now we can think about indents, dedents, and whatnot...
   if (scan_indent_dedent(scanner, lexer, valid_symbols)) {
     return true; // Done
   }
