@@ -56,9 +56,6 @@ typedef struct {
  * Helper functions
  */
 
-// Move forward one character, marking it as significant for parsing
-static void advance(TSLexer *lexer) { lexer->advance(lexer, false); }
-
 // Move forward one character, but ignore it
 static void skip(TSLexer *lexer) { lexer->advance(lexer, true); }
 
