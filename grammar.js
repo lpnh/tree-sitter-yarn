@@ -7,6 +7,17 @@
 /// <reference types="tree-sitter-cli/dsl" />
 // @ts-check
 
+const PREC = {
+  unary: 9,
+  mult: 8,
+  add: 7,
+  comp: 6,
+  eq: 5,
+  xor: 4,
+  or: 3,
+  and: 2,
+};
+
 module.exports = grammar({
   name: 'yarn',
 
@@ -280,19 +291,19 @@ module.exports = grammar({
 
     unary_expression: $ =>
       prec.right(
-        9,
+        PREC.unary,
         seq(field('operator', choice('-', '!', 'not')), $._expression),
       ),
 
     binary_expression: $ => {
       const table = [
-        [2, choice('and', '&&')],
-        [3, choice('or', '||')],
-        [4, choice('xor', '^')],
-        [5, choice('is', 'eq', 'neq', '==', '!=')],
-        [6, choice('lte', 'gte', 'lt', 'gt', '<=', '>=', '<', '>')],
-        [7, choice('+', '-')],
-        [8, choice('*', '/', '%')],
+        [PREC.mult, choice('*', '/', '%')],
+        [PREC.add, choice('+', '-')],
+        [PREC.comp, choice('lte', 'gte', 'lt', 'gt', '<=', '>=', '<', '>')],
+        [PREC.eq, choice('is', 'eq', 'neq', '==', '!=')],
+        [PREC.xor, choice('xor', '^')],
+        [PREC.or, choice('or', '||')],
+        [PREC.and, choice('and', '&&')],
       ];
 
       // @ts-ignore
