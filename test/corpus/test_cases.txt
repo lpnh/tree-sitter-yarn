@@ -70,6 +70,8 @@ title: Start
 // another weird but allowed situation
 <<set $replacement = "ular old co">>
 <<reg{$replacement}mmand>>
+
+<<zorp {2.1}>>
 ===
 
 -----------------------------------------------------------------------------|||
@@ -165,7 +167,10 @@ title: Start
         (identifier)
         (variable
           (identifier))
-        (identifier)))))
+        (identifier))
+      (command_statement
+        (identifier)
+        (number)))))
 
 =============================================================================|||
 Detours
@@ -580,6 +585,63 @@ title: Start
           (block
             (line_statement
               (text))))))))
+
+=============================================================================|||
+EnumsFunctionsReturningStringMayBeComparedToAnyStringEnum
+=============================================================================|||
+
+title: Start
+---
+
+<<enum QuestStatus>>
+<<case NotStarted = "NotStarted">>
+<<case InProgress = "InProgress">>
+<<case Completed = "Completed">>
+<<endenum>>
+
+<<if get_quest_status("MyQuest") == string(QuestStatus.InProgress)>>
+// TODO: Should allow this:
+// <<if get_quest_status("MyQuest") == QuestStatus.InProgress>>
+    success
+<<endif>>
+
+===
+
+-----------------------------------------------------------------------------|||
+
+(dialogue
+  (node
+    (title_header
+      (identifier))
+    (body
+      (enum_statement
+        (identifier)
+        (enum_case_statement
+          (identifier)
+          (string))
+        (enum_case_statement
+          (identifier)
+          (string))
+        (enum_case_statement
+          (identifier)
+          (string)))
+      (if_statement
+        (binary_expression
+          (function_call
+            (identifier)
+            (arguments
+              (string)))
+          (function_call
+            (identifier)
+            (arguments
+              (member_expression
+                (identifier)
+                (identifier)))))
+        (block
+          (comment)
+          (comment)
+          (line_statement
+            (text)))))))
 
 =============================================================================|||
 Functions
@@ -1076,6 +1138,100 @@ title: BakerSeesPlayer
                 (number)))))))))
 
 =============================================================================|||
+NodeGroupVisitTracking
+=============================================================================|||
+
+title: Start
+---
+Visited: {visited("NodeGroup")}
+Visit Count: {visited_count("NodeGroup")}
+<<detour NodeGroup>>
+Visited: {visited("NodeGroup")}
+Visit Count: {visited_count("NodeGroup")}
+<<detour NodeGroup>>
+Visited: {visited("NodeGroup")}
+Visit Count: {visited_count("NodeGroup")}
+<<detour NodeGroup>>
+Visited: {visited("NodeGroup")}
+Visit Count: {visited_count("NodeGroup")}
+===
+title: NodeGroup
+when: always
+---
+I'm a node group
+===
+
+-----------------------------------------------------------------------------|||
+
+(dialogue
+  (node
+    (title_header
+      (identifier))
+    (body
+      (line_statement
+        (text)
+        (function_call
+          (identifier)
+          (arguments
+            (string))))
+      (line_statement
+        (text)
+        (function_call
+          (identifier)
+          (arguments
+            (string))))
+      (jump_statement
+        (identifier))
+      (line_statement
+        (text)
+        (function_call
+          (identifier)
+          (arguments
+            (string))))
+      (line_statement
+        (text)
+        (function_call
+          (identifier)
+          (arguments
+            (string))))
+      (jump_statement
+        (identifier))
+      (line_statement
+        (text)
+        (function_call
+          (identifier)
+          (arguments
+            (string))))
+      (line_statement
+        (text)
+        (function_call
+          (identifier)
+          (arguments
+            (string))))
+      (jump_statement
+        (identifier))
+      (line_statement
+        (text)
+        (function_call
+          (identifier)
+          (arguments
+            (string))))
+      (line_statement
+        (text)
+        (function_call
+          (identifier)
+          (arguments
+            (string))))))
+  (node
+    (title_header
+      (identifier))
+    (when_header
+      (header_when_expression))
+    (body
+      (line_statement
+        (text)))))
+
+=============================================================================|||
 Once
 =============================================================================|||
 
@@ -1262,6 +1418,25 @@ Bea: line text
     -> Option2
 <<endif>>
 
+-> Option A <<if false>>
+-> Option B <<if false>>
+Line after fallthrough option block 1
+
+-> Option A
+	-> Option A1 <<if false>>
+	-> Option A2 <<if false>>
+	Line inside Option A fallthrough block 2
+-> Option B <<if false>>
+Line after fallthrough option block 2
+
+-> Option A <<if false>>
+	-> Option A1 <<if false>>
+	-> Option A2 <<if false>>
+-> Option B <<if false>>
+	-> Option B1 <<if false>>
+	-> Option B2 <<if false>>
+Line after fallthrough option block 3
+
 ===
 
 -----------------------------------------------------------------------------|||
@@ -1404,7 +1579,79 @@ Bea: line text
             (shortcut_option_statement
               (shortcut_option
                 (option_line
-                  (text))))))))))
+                  (text)))))))
+      (shortcut_option_statement
+        (shortcut_option
+          (option_line
+            (text)
+            (line_condition
+              (boolean))))
+        (shortcut_option
+          (option_line
+            (text)
+            (line_condition
+              (boolean)))))
+      (line_statement
+        (text))
+      (shortcut_option_statement
+        (shortcut_option
+          (option_line
+            (text))
+          (shortcut_option_statement
+            (shortcut_option
+              (option_line
+                (text)
+                (line_condition
+                  (boolean))))
+            (shortcut_option
+              (option_line
+                (text)
+                (line_condition
+                  (boolean)))))
+          (line_statement
+            (text)))
+        (shortcut_option
+          (option_line
+            (text)
+            (line_condition
+              (boolean)))))
+      (line_statement
+        (text))
+      (shortcut_option_statement
+        (shortcut_option
+          (option_line
+            (text)
+            (line_condition
+              (boolean)))
+          (shortcut_option_statement
+            (shortcut_option
+              (option_line
+                (text)
+                (line_condition
+                  (boolean))))
+            (shortcut_option
+              (option_line
+                (text)
+                (line_condition
+                  (boolean))))))
+        (shortcut_option
+          (option_line
+            (text)
+            (line_condition
+              (boolean)))
+          (shortcut_option_statement
+            (shortcut_option
+              (option_line
+                (text)
+                (line_condition
+                  (boolean))))
+            (shortcut_option
+              (option_line
+                (text)
+                (line_condition
+                  (boolean)))))))
+      (line_statement
+        (text)))))
 
 =============================================================================|||
 Types
