@@ -111,7 +111,7 @@ module.exports = grammar({
     line_condition: $ =>
       choice(
         seq('<<', 'if', $._expression, '>>'),
-        seq('<<once', optional(seq('if', $._expression)), '>>'),
+        seq('<<', 'once', optional(seq('if', $._expression)), '>>'),
       ),
 
     // If statement
@@ -201,7 +201,7 @@ module.exports = grammar({
       seq(
         seq('<<', 'enum', field('name', $.identifier), '>>'),
         repeat1(seq('<<', $.enum_case_statement, '>>')),
-        '<<endenum>>',
+        seq('<<', 'endenum', '>>'),
       ),
 
     enum_case_statement: $ =>
@@ -240,7 +240,7 @@ module.exports = grammar({
           field(
             'alternative',
             seq(
-              '<<else>>',
+              seq('<<', 'else', '>>'),
               alias(
                 repeat(choice($._statement, $._eol)),
                 $.once_alternate_clause,
@@ -249,7 +249,7 @@ module.exports = grammar({
           ),
         ),
         optional($._eol),
-        '<<endonce>>',
+        seq('<<', 'endonce', '>>'),
       ),
 
     // Shortcut option statement

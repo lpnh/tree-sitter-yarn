@@ -1377,7 +1377,15 @@
         "required": false,
         "types": [
           {
-            "type": "<<else>>",
+            "type": "<<",
+            "named": false
+          },
+          {
+            "type": ">>",
+            "named": false
+          },
+          {
+            "type": "else",
             "named": false
           },
           {
@@ -1966,22 +1974,6 @@
     "named": false
   },
   {
-    "type": "<<else>>",
-    "named": false
-  },
-  {
-    "type": "<<endenum>>",
-    "named": false
-  },
-  {
-    "type": "<<endonce>>",
-    "named": false
-  },
-  {
-    "type": "<<once",
-    "named": false
-  },
-  {
     "type": "<=",
     "named": false
   },
@@ -2058,7 +2050,15 @@
     "named": false
   },
   {
+    "type": "endenum",
+    "named": false
+  },
+  {
     "type": "endif",
+    "named": false
+  },
+  {
+    "type": "endonce",
     "named": false
   },
   {
