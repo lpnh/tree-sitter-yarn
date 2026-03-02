@@ -1,6 +1,6 @@
 {
   "name": "tree-sitter-yarn",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Yarn grammar for tree-sitter",
   "repository": "https://github.com/lpnh/tree-sitter-yarn",
   "license": "Unlicense",
